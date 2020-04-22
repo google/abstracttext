@@ -1,0 +1,85 @@
+{
+  "Z1K1": "Z4",
+  "Z1K2": "Z7",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "functioncall"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Funktionsaufruf"
+      }
+    ]
+  },
+  "Z1K4": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "represents a function application"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Anwendung einer Funktion mit Argumenten"
+      }
+    ]
+  },
+  "Z1K5": [
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "function application"
+    },
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "call"
+    }
+  ],
+  "Z4K1": "Z7",
+  "Z4K2": [
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z7K1",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "function"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Funktion"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "function to apply"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "die aufzurufende Funktion"
+          }
+        ]
+      },
+      "Z3K3": "Z54"
+    }
+  ],
+  "Z4K4": "Z26"
+}

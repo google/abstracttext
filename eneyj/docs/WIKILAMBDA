@@ -1,0 +1,67 @@
+Wikilambda is an open repository of code that anyone can use and contribute to.
+
+Every page in Wikilambda represents a function. A function has a description,
+a list of parameters, test cases, a list of implementations in different
+programming languages, and further metadata. The implementations can be reused
+in other software projects (private apps or scripts), be called and executed
+online (either just in the browser or in a cloud environment such as Google
+cloud or Jupyter notebooks), composed to achieve more complex functionality,
+signed, analyzed or validated, and much more.
+
+Wikilambda is a project in the spirit of Wikipedia, Wikidata, Wiktionary, and
+others, and it allows contributors from all over the world to create and
+maintain a library of functions, which can be used by anyone for any purpose.
+Every function can be supported by multiple implementations in different
+programming languages, test cases, pre- and postconditions, documentation,
+metadata in form of runtime estimates and complexity guarantees for the
+different implementations, etc. Users may call a function directly on the
+Website, or from their own code or applications, from a command line interface,
+or a local app. The function may be executed locally in the browser, in the
+cloud, or locally and embedded within the users application.
+
+Wikilambda is intended to create both a well-defined common catalog of
+functions which can be widely reused, and also an environment where functions
+can be quickly combined and executed on the fly. Wikilambda aims to make life
+easier for developers, who can rely on this repository like on any external
+library, and for end users who can call functions as needed, in a way that is
+currently only available with a very uneven coverage through specific websites
+who are often written in the form of 1990s Websites with Java Applets.
+
+All Functions are pure, in order to enable a secure sandboxed execution. Also,
+every implementation can be annotated with metadata and cryptographically
+signed. End users can select and audit which implementation of each function
+to use, depending on their available hardware resources and web of trust
+settings.
+
+Wikilambda will allow easy access to large knowledge bases such as Wikidata,
+but also to binary input and output files. It is entirely possible to upload
+an image as an input file and return analysis results such as what is depicted
+on the image, or how many different colors the image has - or a different
+binary, e.g. in a different format.
+
+Wikilambda continues the tradition of moving more computation, which has
+usually happened on the command line or with apps by more computer savvy
+computer users, to the Web and make democratize access to functionality that
+was not available before. At the same time it will increase the productivity
+of developers everywhere as they can just use a large library of code instead
+of relying on properly copy and pasting answers from StackOverflow.
+
+Unlike in Wikipedia, contributors will mostly create new implementations for a
+function instead of updating existing functions. The implementations can be
+automatically tested against the given tests, against each other, and further
+analyzed.
+
+Implementations can be written in a number of different programming languages,
+and yet to be able to call functions implemented in other programming
+languages. The execution engine can smoothly (although not necessarily with the
+highest possible performance) operate in different languages. Although in most
+cases there is a large performance boost by composing functions within a single
+programming language, there is no requirement to do so. In many cases, the
+speed of development and the developers time will be more valuable than the
+additional computer cycles spent in the execution engine.
+
+I would predict that it is important for such a project to eventually find a
+steward in an organization like the Wikimedia Foundation, in order to avoid the
+issue that limited Freebase's growth, being connected to a commercial entity.
+Having a world wide community work together on a library of functions is a
+powerful new step for advancing the Web, and the computing world in general.

@@ -1,0 +1,57 @@
+{
+  "Z1K1": "Z4",
+  "Z1K2": "Z17",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "argument_declaration"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Argumentsdeklaration"
+      }
+    ]
+  },
+  "Z4K1": "Z17",
+  "Z4K2": [
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z17K1",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "argument_type"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Wertebereich"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "the range this function is defined over"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "der Wertebereich"
+          }
+        ]
+      }
+    }
+  ],
+  "Z4K4": "Z26"
+}

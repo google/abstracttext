@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Denny Vrandecic"
+		]
+	},
+	"abstracttext-desc": "Allows the maintenance of the content in an abstract syntax",
+  "apihelp-abstracttext-example-1": "Calls the add function with 2 and 2"
+}

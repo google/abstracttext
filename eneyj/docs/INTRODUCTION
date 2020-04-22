@@ -1,0 +1,17 @@
+eneyj allows to specify functions, literals, and implementations for the
+specified functions.
+
+Currently, the best way to explore and get to know eneyj is through the command
+line interface. Welcome to that path!
+
+The command line interface itself has a few commands to help you. Type in
+> .help commands
+for a list, and when you're interested in a specific command, say in the .label
+command, type
+> .help label
+
+Besides that, you can type Z expressions directly in the command line (using
+the tab key for autocompletion) and, per default, the Z expression will be
+validated, evaluated, and then the result linearized. You can control for each
+of those steps whether it should be performed or not using the commands
+.validation, .evaluation, and .linearize.

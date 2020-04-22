@@ -1,0 +1,24 @@
+List of useful command line commands
+
+npm test
+node src/eneyj.js _negate_true
+node src/eneyj.js --lang:en 'negate(true)'
+node src/measure.js --chatty and xor
+node src/calibrate.js --chatty
+DEBUG=eneyj:log:* node src/eneyj.js --lang:en --debug 'negate(true)'
+DEBUG='eneyj:*,-eneyj:debug' node src/eneyj.js --lang:en 'negate(true)'
+DEBUG=eneyj:log:test node src/test/test.js
+npm run pushtowiki
+npm run pullfromwiki
+git reset --hard
+
+x=100; while [ $x -gt 0 ]; do node src/scripts/measure.js --chatty; x=$(($x-1)); done
+
+Count line lengths of all files in src/ :
+find . -name '*' | xargs wc -l
+
+Profiling:
+node --prof src/test/test.js
+node --prof-process iso[tab] > config/logs-run.log
+(compare with other logs there)
+Currently down to 4s on 277 ZObjects and 1381 tests

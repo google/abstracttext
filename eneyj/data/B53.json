@@ -1,0 +1,13 @@
+{
+  "Z1K1": "Z11",
+  "Z1K2": "B53",
+  "Z1K3": [
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "integer_value"
+    }
+  ],
+  "Z11K1": "Z251",
+  "Z11K2": "error is in the Z1K3 above, should be a Z12"
+}

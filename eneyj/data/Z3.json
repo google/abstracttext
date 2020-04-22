@@ -1,0 +1,125 @@
+{
+  "Z1K1": "Z4",
+  "Z1K2": "Z3",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "key"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Schluessel"
+      }
+    ]
+  },
+  "Z1K4": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "name of key-value field in a ZObject"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Name eines Felds in einem ZObjekt"
+      }
+    ]
+  },
+  "Z4K1": "Z3",
+  "Z4K2": [
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z3K1",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "type"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Typ"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "type the value has to be"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Typ des Werts"
+          }
+        ]
+      }
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z3K2",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "validators"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Validatoren"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "validators the value has to pass"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Validatoren fuer den Wert"
+          }
+        ]
+      }
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z3K3",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "required"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "notwendig"
+          }
+        ]
+      }
+    }
+  ],
+  "Z4K4": "Z26"
+}

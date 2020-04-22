@@ -1,0 +1,22 @@
+{
+  "Z1K1": "Z237",
+  "Z1K2": "Z243",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "English_consonant_startphoneme"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Englisches_Konsonantstartphonem"
+      }
+    ]
+  },
+  "Z237K1": "Z243",
+  "Z237K2": "Z251",
+  "Z237K3": "Z241"
+}

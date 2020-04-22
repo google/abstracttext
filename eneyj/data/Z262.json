@@ -1,0 +1,26 @@
+{
+  "Z1K1": "Z236",
+  "Z1K2": "Z262",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "German_grammatical_case"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Deutscher_grammatikalischer_Fall"
+      }
+    ]
+  },
+  "Z236K1": "Z254",
+  "Z236K2": [
+    "Z263",
+    "Z264",
+    "Z265",
+    "Z266"
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "Z1K1": "Z4",
+  "Z1K2": "Z4",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "type"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Typ"
+      }
+    ]
+  },
+  "Z1K4": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "the kind of an object"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Art eines Objekts"
+      }
+    ]
+  },
+  "Z1K5": [
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "class"
+    },
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "category"
+    }
+  ],
+  "Z4K1": "Z4",
+  "Z4K2": [
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K1",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "typename"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Typenname"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "a unique name for the type"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "ein eindeutiger Name fuer den Typ"
+          }
+        ]
+      },
+      "Z3K1": "Z4",
+      "Z3K3": "Z54"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K2",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "keys"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Schluessel"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "the slots for values on this type"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "die Wertefelder"
+          }
+        ]
+      },
+      "Z3K1": "Z10"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K3",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "validators"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Validatoren"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "checks a value for correctness"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "prueft einen Wert"
+          }
+        ]
+      },
+      "Z3K1": "Z10"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K4",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "linearizer"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Linearisierer"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "turns a value into a string"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "erzeugt eine leicht lesbare Form"
+          }
+        ]
+      },
+      "Z3K1": "Z8",
+      "Z3K3": "Z54"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K5",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "coercions"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Umwandler"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "implicit casting"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "automatische Umwandler"
+          }
+        ]
+      },
+      "Z3K1": "Z10"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K6",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "evaluator"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Berechner"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "what to use to evaluate this"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "womit dies zu evaluieren ist"
+          }
+        ]
+      },
+      "Z3K1": "Z8"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z4K7",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "possible_values"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "moegliche_Werte"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "the set of possible values for this type"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "die Menge der moeglichen Werte"
+          }
+        ]
+      },
+      "Z3K1": "Z10"
+    }
+  ],
+  "Z4K4": "Z600"
+}

@@ -1,0 +1,423 @@
+== NEWAL ==
+
+If the expected type is Zx and the actual type is Zx, all is fine.
+(might still need alpha and beta reduction, though?)
+If the expected type is Z1 and the actual type is Za, all is fine.
+If the expected type is Zx and the actual type is Z7, eval.
+If the expected type is Zx and the actual type is Za, check for coercions.
+
+Not everything needs to be evaluated.
+Only the local context.
+First loading all references, and then doing the beta-substitution is
+overkill, as we beta internal code that got loaded later. There cannot be
+any references there.
+Also, maybe have a marker to state that this part is done?
+
+eval() actually does evaluation (on everything? a single step?)
+
+When does eval happen?
+Options:
+(1) at beginning everywhere
+(2) only when needed (but how to figure that out?)
+(3) only on arguments
+
+== PARENTHESELESS ==
+
+Instead of
+(1) add(one, two)
+(2) add one two
+(3) add one, two
+
+Problem: requires knowledge of the symbols, i.e. how many and which
+parameters does it have. Given that knowledge, is it still well defined?
+
+assume f with Z8 -> Z8
+assume g with Z8, Z8 -> Z8
+
+g f f f
+unclear whether g(f, f(f)) or g(f(f), f)
+With commas:
+g f, f f
+clear
+g g g g, g
+g g, g g g
+g g g, g g
+Feels like this gets unclear (although the examples are all clear)
+
+curry_right show, English one
+
+It seems that this actually works, but I am not sure it makes it more readable
+Should be an alternative parser, simply
+
+== EXAMPLE SENTENCES ==
+
+Wikipedia is a free encyclopedia available in almost 300 languages.
+Marie Curie was a Polish-naturalized French chemist and physicist.
+Marie Curie is the only person to have received a Nobel Prize in two different sciences.
+The island is connected with a land bridge during low tide, but becomes a proper island during high tide.
+The fountain was turned on when trains were approaching, and frugally turned off after departure.
+
+Ed Lee, the mayor of San Francisco, dies of cardiac arrest.
+London Breed, as President of the Board of Supervisors, succeeds him as acting mayor.
+In January, the Board of Supervisors votes to replace London Breed with Mark Farrell as interim mayor to deny London Breed the advantage of incumbency.
+London Breed, Mark Leno, and Jane Kim are the main candidates for the special election to finish Ed Lee’s term as mayor of San Francisco.
+London Breed wins the special election and becomes mayor.
+
+Upon death or resignation of the mayor, the president of the Board of Supervisors becomes acting mayor until the full board elects an interim replacement for the remainder of the term or until a special election.
+
+San Francisco is the fourth-largest city in California, after Los Angeles, San Diego, and San Jose.
+
+To impress visitors and potential settlers with the abundance of water in Ontario, a fountain was placed at the Southern Pacific railway station.
+It was turned on when passenger trains were approaching and frugally turned off again after their departure.
+
+Während der ägyptischen Expedition Napoleons wurde der Stein am 15. Juli 1799 von einem französischen Offizier namens Pierre François Xavier Bouchard bei Rašīd (Rosette) im Nil­delta gefunden.
+Über die Umstände, unter denen Bouchard den Stein fand, existieren zwei Versionen: Eine besagt, dass sein Pferd über den Stein von Rosette gestolpert sei, weil er halb aus dem Boden ragte. Laut der zweiten Version habe Bouchard den Stein beim Abbruch eines alten Walls der dortigen Festung vorgefunden.
+Einmalig und einzigartig in der ägyptischen Geschichte ist die Deutlichkeit, mit der die aufgezwungenen Rechtsgeschäfte der Priesterschaft aufgeführt werden.
+Unmittelbar nach der Entdeckung im Jahr 1799 fertigten die französischen Forscher in Ägypten zahlreiche Kopien der Inschriften an.
+
+Ein Rentnerteich ist ein Teich in dem Blutegel leben nachdem sie fuer medizinische Zwecke eingesetzt wurden.
+
+== FIGURING OUT CONTENT, RENDERER, CONSTRUCTORS ==
+
+Z500 type frame - frame_type, slots
+Z501 type construktor - abstract_return_type, slot_definitions, renderers
+Z502 type content - representation
+Z503 type renderer - return_type, language, slot_definition, implementation
+Z504 type constructor_type - table_types
+Z505 type slot_definition - slot_type
+Z506 type slot_instantiation - slot_key, slot_value
+Z507 type context
+Z508 type conditional_function - condition, function
+Z509 function_if_test: conditional_function, language, context -> function
+Z510 function keys: zobject -> list of keys
+Z511 context empty_context
+Z512 render: content, language, context -> string
+Z513 function pn_from_noun_en
+Z514 function pn_from_noun_de
+Z515 det_de_null_einzahl
+Z516 table subclassification_from_n_n_en(table super, table sub)
+Z517 table subclassification_from_n_n_de(table super, table sub)
+Z518 constructor_type noun: English_noun, German_noun
+Z519 constructor_type noun: English_clause, German_clause
+Z520 construktor n_book: noun, -, ...
+Z521 construktor n_encyclopedia: noun, -, ...
+Z522 type subclassification - sub, super
+Z523 frame enc_are_books - subclassification_constructor; n_encyclopedia, n_book
+Z524 subclassification enc>book - n_encyclopedia, n_book
+Z525 construktor subclassification_constructor - clause, [noun sub, noun super], language_is_english, Z517, language_is_german, Z518
+Z526 conditional_function condition_function_example: Z527, Z516
+Z527 function language_is_english
+Z528 function language_is_german
+Z529 function everything_by_type
+Z530 function slot_value: slot_instantiation, language -> string
+Z531 function try_until_string: list_of_condition, language, context -> string or nothing
+Z534 function find_table_by_language_in_list: list, language -> table
+Z535 list of (noun_en_book, noun_de_buch)
+Z536 table_by_language_from_construktor: construktor, language -> table
+Z537 encyclopedias_are_books_string: language -> string
+Z538 subclassification_string_from_n_n_language: construktor, construktor, language -> string
+Z539 subclassification_sentence_from_n_n_language: construktor, construktor, language -> table
+Z540 subclassification_clause_from_n_n_language: construktor, construktor, language -> table
+Z541 list_of_conditional_functions_from_constructor: construktor -> list
+Z542 function_from_constructor: construktor, language, context -> function
+Z543 instantiation_from_pn_n_en: pn, n -> English_clause
+Z544 instantiation_from_pn_n_de: pn, n -> English_clause
+Z545 construktor instantiation_constructor: instanc, descriptor, Z542, Z543
+Z546 instantiation_clause_from_person_n_language: person, n, lang -> clause
+Z547 constructor_type person_name
+Z548 person_name person_marie_curie
+Z549 noun n_person
+Z550 constructor_type np
+Z551 instantiation_clause_from_np_n_language: np, n, lang -> clause
+Z552 pn_from_n
+Z553 instantiation_clause_from_n_n_language
+Z554 n_wikipedia
+
+Z500 type frame - frame_type, slots
+Z501 type construktor - abstract_return_type, slot_definitions, renderers
+Z502 type content - representation
+Z503 type renderer - return_type, language, slot_definition, implementation
+Z504 type constructor_type - table_types
+Z505 type slot_definition - slot_type
+Z506 type slot_instantiation - slot_key, slot_value
+Z512 render: content, language, context -> string
+Z516 table subclassification_from_n_n_en(table super, table sub)
+Z518 constructor_type noun: English_noun, German_noun
+Z520 construktor n_book: noun, -, ...
+Z522 type subclassification - sub, super
+Z523 frame enc_are_books - subclassification_constructor; n_encyclopedia, n_book
+Z524 subclassification enc>book - n_encyclopedia, n_book
+Z525 construktor subclassification_constructor - clause, [noun sub, noun super], language_is_english, Z517, language_is_german, Z518
+Z534 function find_table_by_language_in_list: list, language -> table
+Z536 table_by_language_from_construktor: construktor, language -> table
+Z540 subclassification_clause_from_n_n_language: construktor, construktor, language -> table
+Z542 function_from_constructor: construktor, language, context -> function
+
+render(frame_encyclopedias_are_books, en) =
+  subclassification(en)(encyclopedia(en), book(en))
+
+Z504 are currently Z8 functions, not Zrenderer. Change?
+Z524 should be a Z525 not a Z522, but Z525 is a Z501 not a Z4
+
+Meaning does not produce a function or is the type of noun
+Rather:
+there is a function
+ string render(meaning, language, context)
+
+How to represent
+- constructor
+- renderer
+- content
+
+Content = Meaning of Sentence or higher
+subclassification(encyclopedia, book)
+
+Constructor:
+subclassification: clause
+  slot sub : noun
+  slot sup : noun
+
+creates
+
+frame
+  frame_type : subclassification
+  slots: [
+    subject : encyclopedia
+    object : book
+  ]
+
+Renderer:
+render(frame, language, context) : table
+  renderer_by_frame_type(frame.frame_type)(frame, language, context)
+
+call_renderer_by_frame_type(frametype) : function
+  frametype.renderer
+
+frame_type :
+  abstract_return_type : abstract_tabletype
+  slot_definitions : list of frame_slot_definition
+
+frame_slot_definition :
+  type : abstract_tabletype
+  optional : bool
+
+slot_filler:
+  value : value
+  slot_name : frame_slot_definition
+  optional : boolean
+  label : string
+
+Renderer
+
+frame_type
+  abstract_return_type
+
+book : noun
+  [ noun_en_book, noun_de_buch ]
+  book = [(en, noun_en_book), (de, noun_de_buch)]
+
+don't forget: not just generalizing, but also knowledge if possible
+
+meaning datatype: ???
+
+{
+  id: roses_are_red,
+  type: function,
+  arguments: [
+    {
+      argument_name: language,
+      argument_type: language
+    }
+  ],
+  return_type: {
+    type: string
+  },
+  implementations: [
+    id: C1,
+    implementation: {
+      try_until_success([
+        if(same(language, en), "Roses are red.", FAIL);
+        if(same(language, en), sntnc(cnct(noun_en_rose(pl)), " are red")), FL);
+        ...
+      ])
+    }
+  ]
+}
+
+this should be derivable from a meaning
+
+{
+  id: roses_are_red,
+  type: meaning,
+  concretizations: [
+    {
+      language: en,
+      concretization: {
+        type: string,
+        string: "Roses are red."
+      }
+    },
+    {
+      language: en,
+      concretization: {
+        type: call,
+        i: capitalize(concat(_noun_en_rose(plural)), " are red.")
+      }
+    },
+    {
+      language: en,
+      concretizations: {
+        type: call,
+        i: captlz(clause_en_subject_adjective(_noun_en_rose, _adjective_en_red))
+      }
+    },
+    {
+      type: call,
+      implementation: are_red(_noun_rose)
+    },
+    {
+      type: call,
+      i: subject_is_adjective(_noun_rose, _adjective_red)
+    }
+  ]
+}
+
+{
+  id: are_red,
+  type: ???,
+  parameters: [
+    {
+      type: noun,
+      name: subject
+    }
+  ],
+  concretization: [
+    {
+      language: en,
+      implementation: concat(subject(plural), " are red.")
+    },
+    {
+      language: de,
+      implementation: concat(subject(plural, nominativ), " sind rot.")
+    }, *
+  ],
+  definition: [
+    {
+      type: function_call,
+      implementation: NounIsAdjective(subject, _adjective_red)
+    }, *
+  ]
+}
+
+{
+  id: subject_is_adjective,
+  type: ???
+  parameters: [
+    {
+      type: noun,
+      name: subject
+    },
+    {
+      type: adjective,
+      name: adj
+    }
+  ],
+  concretization: [
+    {
+      language: en,
+      i: concat(noun(plural), " are ", adj, ".")
+    },
+    {
+      language: de,
+      i: concat(noun(plural, nominativ), " sind ", adj, ".")
+    }
+  ]
+}
+
+SentencePrizesWonCall = SentencePrizesWon(MarieCurie, NobelPrize, Two)
+
+Marie Curie is the only person that received two Nobel Prizes in different sciences.
+Clause
+  NP = Marie Curie
+  NP =
+    det = only
+    noun = person
+    PP =
+      verb = receive
+      det = Two
+      noun = Nobel Prize
+      pp = (in?)
+        det = different
+        noun = science
+
+
+== FALLBACKS ==
+
+She received the Sveriges Riksbank Prize in Economic Sciences, commonly known
+as the Nobel Prize in Economics.
+->
+She received the Nobel Prize in Economics.
+->
+She received the Nobel Prize.
+or
+She received an  important award in economics.
+->
+She received an economics award.
+
+
+== DESIGNING INTERACTIVE SESSION ==
+
+and(negate(true), false)
+1-- 2----- 3---   4----
+
+> 1 (the most external function)
+Back up (if this was pulled out)
+eXpand
+eValuate
+Envelope
+Documentation
+list Implementations / show Implementation
+Switch
+
+> 2 (any not most external function)
+Zoom
+eXpand
+eValuate
+Envelope
+Fold
+Documentation
+list Implementations / show Implementation
+Switch
+
+> 3 (any literal)
+Zoom
+Envelope
+Fold (if longer than three characters and not top)
+Documentation
+Switch
+
+To start:
+.interactive add(positive_integer("7"), positive_integer("3"))
+  or
+.i add(positive_integer("7"), positive_integer("3"))
+Starting interactive session. At any time, press ? for help and Q to quit.
+add(positive_integer("7"), positive_integer("3"))
+1-- 2--------------- 3--   4--------------- 5--
+> 1x
+if(is_zero(positive_integer("7")), positive_integer("3"), add(successor(positive_integer("7")), predecessor(positive_integer("3"))))
+1- 2------ 3--------------- 4--    5--------------- 6--   7-- 8-------- 9--------------- 0--    a---------- b--------------- c--
+> 5f
+if(is_zero(positive_integer("7")), ..., add(successor(positive_integer("7")), predecessor(positive_integer("3"))))
+1- 2------ 3--------------- 4--    5--  6-- 7-------- 8--------------- 9--    0---------- a--------------- b--
+> 2v
+if(false, ..., add(successor(positive_integer("7")), predecessor(positive_integer("3"))))
+1- 2----  3--  4-- 5-------- 6--------------- 7--    8---------- 9--------------- 0--
+> 5v
+if(false, ..., add(positive_integer("8"), predecessor(positive_integer("3"))))
+1- 2----  3--  4-- 5--------------- 6--   7---------- 8--------------- 9--
+> 7z
+predecessor(positive_integer("3"))))
+1---------- 2--------------- 3--
+
+display inline (no, bad for copy pasting)
+1-if(2-is_zero(3-positive_integer(4-"7")), 5-..., 6-add(7-successor(8-positive_integer(9-"7")), 0-predecessor(a-positive_integer(b-"3"))))

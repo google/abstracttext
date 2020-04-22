@@ -1,0 +1,20 @@
+{
+  "Z1K1": "Z276",
+  "Z1K2": "Z279",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "English_person_name"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Englischer_Personenname"
+      }
+    ]
+  },
+  "Z276K1": "Z251"
+}

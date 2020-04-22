@@ -1,0 +1,725 @@
+Try to get the wiki to work again
+
+
+Should it be evaluate or should it be quote / unquote?
+
+> keys(value(head(tail(by_key(name, "Z8K4")))))
+[Z1K1, Z14K1]
+> by_key(value(head(tail(by_key(name, "Z8K4")))), "Z14K1")
+readline.js:1030
+            throw err;
+            ^
+TypeError: data.context is not iterable
+
+typekeys Z599 does not work properly
+[head([first, second]), head(tail([first, second]))]
+it works with write_eval and value. Can that be moved into show?
+
+(blocked on newal)
+(happens because there is no evaluation for Z7/Z16/Z19 inside of a Z14)
+
+for feature parity:
+* show implementations
+
+* show Z200
+
+> Z210
+table(English_determiner, English, [table("one", [English_consonant_startphoneme]), table("one", [English_vowel_startphoneme])], [English_singular])
+
+> [Z210, Z210]
+[table(English_determiner, English, [table("one", [English_consonant_startphoneme]), table("one", [English_vowel_startphoneme])], [English_singular]), arity_mismatch:
+[5, 4]]
+
+
+show  (<- had old)
+- Z2 pair         done
+- Z3 key
+- Z4 type         done
+- Z5 error        done, needs improvement (probably after changing eval)
+- Z6 string       done
+- Z7 call       <- f(x, y)
+- Z8 function     done
+- Z9 reference  <- ref
+- Z10 list        done
+- Z11 monotext  <- write - text_en_word, text_de_wort
+- Z12 multitext <- write - multilingual_text_en_word, multilingual_text_en_de_word, multilingual_text_word_no_ref
+- Z14 impl
+- Z15 exception   done (seems good)
+- Z16 code      <- write
+- Z17 arg decl
+- Z18 arg use   <- write (with name)
+- Z19 builtin   <- write
+- Z20 test
+- Z21 argumentlist
+- Z23 nothing
+- Z40 lambda
+- Z50 boolean
+- Z60 character   done
+- Z70 number      done
+- Z170 kleenean
+- Z180 language
+- Z200 table    <- write Z209-Z230
+- Z236 language feature dimension
+- Z237 language feature
+- Z276 tabletype
+- Z391 abs tabletype
+- Z400 errormessage
+- Z500 frame
+- Z501 construktor
+- Z502 content
+- Z503 renderer
+- Z504 consttype
+- Z505 slot def
+- Z506 slot inst
+- Z507 context
+- Z508 cond function
+- Z522 subclassification
+
+- remove .label and .id
+
+- think if the escaping is now any good or just nonsense
+ - make an util for escape string and one for unescape string
+ - make escaping character something else than /? maybe ^
+ - maybe delete unescapeString, seems reimplemented in parse
+
+
+set linearizer in CLI
+- .l Z105 -> all is undefined
+- allow for spaces
+- allow for names instead of ZIDs
+- display using a parse
+- validate the result
+- clean up answer.js lin code
+- set language interact with linearize?
+- remove the boolean linearizer option
+- remove jsondir, typedlin, color, etc options
+
+read
+- read takes the output of write and turns it into z objects
+
+- internalize construct
+- internalize parse as read
+- internalize validate
+- rethink evaluate
+  - write(Z110) - write(lambda_ten) - first evals lambda_ten and then writes it
+  - reconsider
+  - some of the functions in the 60s areas look wrong, should be IDs not functions
+  - use Z584 instead of Z583 when the new evaluation works
+
+> [add, multiply]
+(takes far too long)
+
+fast (all <4s):
+[add]
+[multiply]
+[and]
+[or]
+[and, or]
+[and, or, negate]
+[and, and]
+[and, multiply] (6s)
+[add, or] (6s)
+slow (> 1m):
+[add, multiply]
+[multiply, and]
+[add, add]
+
+(this might be solved by newal)
+
+map(curry_right(show, English), list_character_abc)
+> dies
+
+should be solved by newal (or rather, stronger type checking)
+
+- .forget to forget all data in cli
+
+- awards
+
+- remove key from Z23
+
+> show(add(two, three), English)
+error: error_in_function
+error@val: json_schema_error
+[{"keyword":"pattern","dataPath":".Z9K1","schemaPath":"#/properties/Z9K1/pattern","params":{"pattern":"^[ZB][1-9][0-9]*$"},"message":"should match pattern \"^[ZB][1-9][0-9]*$\""}]
+(a better error message would be 'unknown name "show"')
+
+.id Z15K1 -> leads to CLI dying
+.log + -> leads to CLI dying
+
+- keys not as strings but as entities
+
+- abstract from language
+
+- abstract language types
+  - type for abstract feature dimension
+  - type for abstract features
+  - type for abstract_tabletype = meaningtype
+  - abstract words = meanings = constructor
+
+map(filter(everything, curry_left(is_of_type, error_message)), curry_left(Z185, Z251))
+crashes the runtime (the error is in the curry_left(Z185, Z251) at the end,
+it should be curry_right)
+
+try Z540 with Croatian, errors are not handled well
+
+In Z297 I used Z299K1 should be figured out by validator?
+
+Z180K2(English) = by_key(English, "Z180K2")
+
+Noun has values and selectors
+Plural(Encyclopedia) -> "Encyclopedias" (well not the string)
+NounDeEncyclopedia(singular, nominativ, de) => Enzyklopädie
+gender(NounDeEnzyclopedia) => female
+
+clause subclassification(np, np)
+clause subclassification(n, n)
+clause subclassification(cn, cn)
+
+get lexemes from Wikidata Lexemes
+
+- implement Specification
+
+> everything_by_type(boolean)
+[true, false, true, false, false, false, false, true, true, false, true, true, false, true, true, false, false, true, false, false, true, true, true, true, true, false, false, false, false]
+
+- utils.endOfList, utils.writeList, builtin.Z24 has too many exceptions
+
+- shouldn't there be only two results?
+
+> everything_by_type(kleenean)
+[maybe, kleenean_true, kleenean_false, kleenean_false]
+
+- shouldn't there be only three results?
+
+- make implementations stand alone
+- make tests stand alone
+
+- make tests have a predicate for checking the result, not a value
+- make tests be able to have functioncalls instead of values for args
+
+- make result type of functions be flexible, but not argument types
+
+- need to check table types, really
+
+- allow "constructor" as a label
+
+- access implementations
+- choose implementations
+- run a test
+
+- i18n the good bye message from the cli
+
+- validation could be split into two different types of validation:
+  - static validation
+  - dynamic validation
+  - the difference is probably only relevant for Z7
+  - maybe also Z8 if you take all tests into account
+  - basically, whenever you run a Z7 it does all the tests while running the Z7
+  - on every result, it compares the types, etc.
+  - dynamic and static validation should be made available as functions
+  - so you can run it from the command line
+
+- is that possible, though? will dynamic_validation(not(true)) run
+  dynamic_validation(false) or dynamic_validation(not(true))?
+- is that a CLI problem?
+- how does a function like evaluation interact with CLI?
+
+- figure out dispatching
+
+== Exceptions and errors ==
+
+exceptions on raising and on accepting
+- if does not accept an exception, then just pass them up
+
+- exceptions should probably be explicitly allowed when handled
+- but anything must be allowed to raise or pass an exception
+- can we move more and more of the errors to exceptions?
+
+The following problem requires better exception handling.
+Then this would not be an issue.
+Suggestion: exceptions that the function is interested in have to be declared.
+All others are just passed up.
+
+For new exception handling:
+
+Z1 parameters:
+- Z26 write
+- Z31 if
+- Z32 type of
+- Z33 same
+- Z36 value
+- Z37 reify
+- Z63 show
+- Z68 reduce
+- Z78 curry left
+- Z79 curry right
+- Z105 id
+- Z149 type as string
+- Z163 if_lambda
+- Z185 name from Z object
+- Z190 by key
+- Z199 has key
+- Z329 curry chain left
+- Z335 return five
+- Z368 is first
+- Z369 is first predicate
+- Z370 is exception
+- Z371 try else
+- Z393 is of type
+- Z510 keys
+
+Z1 results:
+- Z31 if
+- Z34 first
+- Z35 second
+- Z36 value
+- Z38 abstract
+- Z64 head
+- Z68 reduce
+- Z105 id
+- Z106 find_second_by_first
+- Z163 if_lambda
+- Z190 by_key
+- Z192 find_first_element_with_condition
+- Z195 chain
+- Z371 try_else
+
+> sentence_from_clause_de(clause_from_np_np_de(np_from_det_noun_de(det_de_unbestimmt_mehrzahl, noun_de_rose), vp_from_np_de(np_from_det_noun_de(det_de_unbestimmt_einzahl, noun_de_rose))))
+[object Object].
+
+eneyj 'Z142(Z449, ".")'
+[object Object].
+
+> add(integer_division(four, zero), two)
+[object Object]2
+
+eneyj 'Z144(Z157(Z384, Z380), Z382)'
+[object Object]2
+
+try in the validation phase, evaluation doesn't have the types anymore.
+Worked, but only for positional :P
+
+Problems: Z185
+(maybe Z157, Z158, Z190)
+
+==
+
+- everything is slow because Z10s are now evaluated,
+  which means they are constantly linearized, because
+  linearization is needed for memoizing
+- need fast keying for memoization
+- or need a different Z10 for constructing and carrying around
+- as we did with cons Z63 and pair Z10
+- maybe we can freeze just before memoization and add a hash to each value
+- (but how would we know the hash before calculating it?)
+
+functions that return tables:
+map(filter(filter(everything, curry_left(is_of_type, function)), curry_chain_left(same, curry_right(by_key, "Z8K2"), table)), curry_right(Z185, Z251))
+all tabletypes:
+filter(everything, curry_left(is_of_type, tabletype))
+functions with 3 parameters:
+map(filter(filter(everything, curry_left(is_of_type, function)), Z329(same, number_of_parameter, positive_integer("3"))), curry_right(Z185, Z251))
+
+
+The following function
+map(filter(filter(everything, curry_left(is_of_type, function)), curry_chain_left(same, curry_right(by_key, "Z8K2"), boolean)), curry_right(Z185, Z251))
+contains and [object Object] in its result, which is not good
+
+- internalize everything as far as possible
+
+- first set of grammar
+  x det_en_definite_plural
+  x det_en_indefinite_plural
+  x vp_from_np_en
+  x vp_en as tabletype
+  x cl_from_np_vp_en
+  - np_from_person (seems to work?)
+  x s_from_cl
+
+functions to write
+- curry(function, positive_integer, value)
+- type_of_parameter(positive_integer, function)
+
+- the copout breaks in validation of Z7 break too much
+  - this is why the following passes although it should be a type mismatch:
+  lambda_if(boolean_to_lambda(true), true, false)
+
+- make parameter label optional when the type is sufficiently speaking
+  - but check on linearization whether it doubles
+
+- see if Z203 should be rewritten in the style of Z204
+
+- rewrite Z205 as a map over the possible values of case
+
+- make the different tabletypes types
+  - with selectible and inherent dimensions
+
+- make the different language features types
+  - much more readable set_table_option
+
+- set_table_option with higher arity?
+
+- pushtowiki and see if anything works
+
+- turn as many errors into exceptions as possible
+
+- i18n
+  - cli
+  - test
+  - scripts in scripts
+
+- to normalize or remove:
+  - Z4K1
+  - Z11K2
+  - Z16K1
+  - Z16K2
+  - Z18K1
+  - Z60K1
+  - Z70K1
+  - Z180K2
+
+- completer can be much smarter
+  - use expected and return types
+  - complete with a comma or a closing bracket
+  - complete with an opening string? closing string?
+  - offer argument name when writing arguments, in dark
+    power(|base, exponent) (with the part after the cursor being dark)
+  - complete in middle of text, not only end (if possible?)
+  - extra: complete is_maybe(|(true)) with functions from boolean_to_kleenean
+  - better search including aliases for Z expressions
+
+- use commands to generate the cli arguments
+
+- algebraic types
+
+- figure out equality - builtin Z33 is weird
+  - fix the problem that leads to linearize/Z180
+  - basically, same(en, en) did not work because same strips of Z1K2 before
+    comparing
+  - could be solved by making same smarter, i.e. have some same that includes id
+  - and some same that doesn't
+  - and introduce same_language I guess for languages?
+  - the identity of a language should be the QID?
+
+- Z357 is the same as Z356, should be like Z300
+  - but no ID leads to caching issues
+  - figure out how to do that
+  - same with Z358 and Z300
+  - remove the Z357, Z358 and Z300 from test then
+  - Z300 has no label (used to be project_name_characterlist)
+
+- create a translator before evaluation?
+- so that Z40 lambda function could be simpler
+  - but translates to a real Z8 for evaluation
+- the same could be for Z9, which could be just a function call to Z7
+
+- all implementations should be in their own Zobjects
+
+- lambda functions have no return type and no type for the params
+
+- run tests in Z8s during the test script?
+
+- move some functions from Z8 to Z40
+
+- there should be a shortcut using argumentreferences
+  ...: E24A4 -> ...: { Z1K1: Z18, Z18K1: E24A1 }
+
+- get rid of Z7?
+
+- we want to have types such as
+  - Z10(Z6) - list of strings
+  - Z2(Z6, E32) - a pair of a string and integer
+  - this wouldn't be literally Z10(Z6)
+  - it would be a call to a function that produces such parametrized types
+  - then there would be functions that can be called on such parametrized types
+  - these functions would be the results of a functioncall themselves
+  - example:
+    - Z10(Z6) list of strings
+    - there would be a function E25 - constructor for Z10(Z6)
+    - E25 takes Z6 - string as an argument
+    - want to call E26 - length on an instance of Z10(Z6):
+      E26: Z10(Z6) -> positive_integer
+    - want to call E27 - head on it
+      E27: Z10(Z6) -> Z6 (ideally)
+    - want to call E28 - append on it
+      E28: Z10(Z6), Z6 -> Z10(Z6)
+      E28: Z10(Z6), Z11 -> error
+    - maybe:
+      there would be a generic version of append
+      the generic version of append has the interface (Z10(Z1), Z1)
+      there is a function that produces a specific version of append
+      the specific version of append has the interface (Z10(Z6), Z6)
+      now, can I use the generic version of append on the specific value?
+
+- move implementations to their own entities
+- add argument IDs
+
+- add eneyj version to calibration/system.json
+
+- internalize validation for validating objects
+  - check that all keys are defined
+  - run validators in type
+  - run validators in keys
+  - validate that keys and values fit
+  - run the validators on the values
+
+- make exceptions Z Objects
+
+- AbstractTextContent
+  - the labelized version should be based on the data, not on disc by name
+
+- create an expander for eneyj objects that
+  - turns arrays into lists
+  - turns values into references
+  - turns values into function calls
+
+- add documentation on cl.js and all scripts
+
+- maybe calls to listify should be calls to expand?
+
+- create a canonicalizer for eneyj objects that
+  - turns lists into arrays
+  - turns references into values
+  - turns function calls into values
+
+- create a tool that turns names to identifiers
+
+- once it is all IDs, sort keys in formatter
+
+- one check is in general of eneyj objects, one is for the specific types
+  - so for example, aliases, canonical_name etc. are tested for all objects
+  - but the specific things of types are checked only for the given types
+
+- a validator takes an object and returns a list of issues
+  - an issue is a type, with a code and a message?
+  - difference from exception or error?
+
+- display in wiki
+
+- linearize in abstract but also in canonical_name
+
+- tools to keep M: namespace and local data directory in sync
+
+- connect to wiki
+  - set language
+
+node src/cl.js 'np_from_det_noun_en(det_en_one, person_en_marie_curie)'
+
+- add preconditions
+  - per function
+  - per implementation
+- add postconditions
+  - per function
+  - per implementation
+  - static postcondition (always true) vs dynamic pc (depends on value)
+- add invariants
+  - per function
+  - per implementation
+
+- turn number, plural into symbol (so that plural knows it belongs to number)
+  - set_table_option(table, plural) instead of sto(table, number, plural)
+  - plural(table) as shortcut for set_table_option(table, plural)
+  - goal is to be able to state:
+  - number_en(np_en_a_rose) / np_en_a_rose(number_en) -> singuar_en
+  - noun_en_rose(singular_en)/singular_en(noun_en_rose) -> noun_en_rose_singlr
+
+- simplify functions on table (np from det noun)
+
+- node src/cl.js 'string_from_table(set_table_option(noun_en_encyclopedia, string("number"), string("singulars")))' -> key-not-found, should be set-table-failed
+(because string_from_table on exception actually tries to work)
+
+- select_text_by_language_with_default
+
+- add exception handling to running type:code lang:js
+
+- move some of the tests from tests.js to test in implementation
+
+- add native implementations:
+  ✓ character_to_string
+  - concatenate
+  - cons
+  - first
+  - head
+  - make_pair
+  - second
+  - tail
+  ✓ type_of
+
+- replace internal if with lambda if
+  - have a field on true and false pointing to lambda_true and lambda_false
+  - replace mapping from true to lambda_true by that field instead of iffing
+
+- proper security model for type:code
+- catch exceptions and time outs when running code
+
+- generic handling of values if there is no such native handling
+
+- proper equality
+
+- should predecessor(0) be 0 or an exception?
+
+- what about type:code that doesn't parse or execute?
+
+- rename lambda functions to lambda?
+
+- add timer to cl.js
+
+- be able to get version (both for cl and as an internal function)
+
+- internalize natify and denatify in the languages
+
+- for code, check that the type conversion exists at validation time
+
+- validate results from abstract
+- validate results from code
+- validate all results?
+
+- clean up if_boolean
+- clean up if_kleenean
+- check need for _if_boolean_switch
+- function get_return_type, so that "if" can be rewritten
+- have two forms of "if", if and if_explicit
+
+- parser
+  - parse quotes
+  - parse escapes
+- pair
+  - but have a typed pair, but how?
+
+- characterlist = list(character)
+- list(T) = pair(T, either(pair(T), nil)
+
+- internalize the validation and schema for types like boolean, integer, etc.
+  - add this to boolean:
+  "possible_values":
+    [{"type": "reference","reference": "true"},
+     {"type": "reference","reference": "false"}],
+  "allows_other_fields": {"type": "reference","reference": "false"}
+
+- if running chatty calibration, show also diffs
+
+- negative numbers
+
+- kleenean_or
+
+- serialize multiple implementations as -> [a, b] instead of -> a -> b
+
+- add unicode test to string that is far away in unicode
+  - 👩🏿‍🔬 __character_scientist
+  - _string_unicode
+
+- for type safety of functions, introduce signatures on function type
+  - can be local only? probably not
+  - I first would say 'signature = string "bool -> bool -> bool"'
+  - but doesn't feel right. maybe list(type) instead? but requires lists
+  - seems to require both lists and non-enum types
+
+- move type checking to the actual types. i.e. any knows what it accepts,
+  function knows what it accepts, etc.
+  - i.e. instead of type must be equivalent, call the type to check
+- think about object type (maybe should be any or top?)
+
+- check that types of test data conforms the type declarations in functions
+
+Types
+  - complex, like list and either
+  - function is complex
+  - error
+  - nothing or null
+  - strings
+  - integers
+  - structs (objects)
+  - tables (selectors and properties, e.g. noun>string: needs case, has gender)
+
+- consider typing for id
+
+- fallbacks everywhere
+- optionals
+- defaults
+- pattern matching
+- closures - do they work correctly?
+
+- return_value_type in if (more than one place) in alpha and beta not converted
+
+- understand typing for linearizing lambda
+  - boolify, intify, stringify, etc., i.e turn λxλy.x into 'true' etc.
+  - use de bruijn indexing? for canonicalization?
+  - use de bruijn indexing for same
+- understand typing for validating lambda
+
+- add checks to all of the stuffs that exist
+  - validate - it seems that higher order validation needs lists? see below
+    - function
+      - check if argument names in implementations are defined and welltyped
+    - function call
+      - constructor calls
+  - internal
+    - if
+
+- coercion
+- rewrite if
+
+- put the eval into one big try loop? how to deal with errors in eval?
+
+- random value test runner
+
+- make a walker?
+
+- think about zero-argument functions
+
+- tease validation and evaluation apart
+
+- check all files in data are used in test
+- change to a proper test framework
+
+- problem: if in a language we don't have a word for 'ice' but use
+  'frozen water' instead, how do we avoid making sentences such as
+  'Frozen water is frozen water.'
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --lang:en 'positive_integer("1")' | wc -l
+  191748
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj 'Z70("1")' | wc -l
+  191128
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin 'Z70("1")' | wc -l
+  189514
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin 'Z6("1")' | wc -l
+  189513
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --lang:en 'Z56(Z54)' | wc -l
+  190309
+
+  That's all due to validation.
+  Here is without validation:
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin 'Z70("1")' | wc -l
+  16
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin 'Z6("1")' | wc -l
+  18
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin --novalidation 'Z56(Z54)' | wc -l
+  72
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin --novalidation 'Z144(Z381,Z381)' | wc -l
+  29
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --nolin --novalidation '[Z144, Z144]' | wc -l
+  528
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --novalidation '[Z144, Z144]' | wc -l
+  397001
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --novalidation '[Z144]' | wc -l
+  65135
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --novalidation 'Z144' | wc -l
+  2099
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --novalidation --nolin 'Z381' | wc -l
+  23
+
+  > DEBUG='eneyj:*,-eneyj:debug' eneyj --novalidation 'Z381' | wc -l
+  601

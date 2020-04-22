@@ -1,0 +1,189 @@
+{
+  "Z1K1": "Z4",
+  "Z1K2": "Z8",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "function"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Funktion"
+      }
+    ]
+  },
+  "Z1K4": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "an algorithm that calculates a result from arguments"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Ein Algorithmus der Ergebnisse beruhend auf Eingabewerten berechnet"
+      }
+    ]
+  },
+  "Z1K5": [
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "method"
+    },
+    {
+      "Z1K1": "Z11",
+      "Z11K1": "Z251",
+      "Z11K2": "procedure"
+    }
+  ],
+  "Z4K1": "Z8",
+  "Z4K2": [
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z8K1",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "arguments"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Argumente"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "arguments this function has"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Argumente dieser Funktion"
+          }
+        ]
+      },
+      "Z3K3": "Z54"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z8K2",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "returntype"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Rueckgabetyp"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "type of the result"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Typ der Antwort"
+          }
+        ]
+      },
+      "Z3K3": "Z54"
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z8K3",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "tests"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Tests"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "pairs of input/output pairs"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Ein- und Ausgabepaare welche die Funktion erfuellen muss"
+          }
+        ]
+      }
+    },
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z8K4",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "implementations"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Implementierungen"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "code that fulfills the contract of this function"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Code der diese Funktion erfuellt"
+          }
+        ]
+      },
+      "Z3K3": "Z54"
+    }
+  ],
+  "Z4K4": "Z593"
+}

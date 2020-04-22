@@ -1,0 +1,364 @@
+== Specification of eneyj ==
+
+1) Z Objects
+
+1.1) Everything is a Z Object.
+     Z Objects are the only data structure.
+     Code and data are both represented as Z Objects.
+     Z Objects are also called eneyj objects.
+
+1.2) Z Objects are immutable.
+
+1.3) Z Objects are sets of key-value pairs.
+
+x1.4) Keys of key-value pairs of Z Objects are either global or local.
+
+x1.5) Global keys concatenate a Z Id, the letter K, and a number.
+
+x1.6) Local keys concatenate the letter K and a number in the decimal system,
+      starting with 1 with no leading zeros.
+
+x1.7) The number in local keys must be consecutive.
+
+x1.8) Every key on a Z Object must be unique.
+
+x1.9) Values of key-value pairs of all Z Objects must be Z Objects.
+
+x1.10) Every Z Object must have a key Z1K1 Object-Type.
+
+Suggestion: Make keys evaluable.
+*1.11) The key of a JSON key-value pair is evaluated as follows:
+       a) if the key is a Z ID, this is parsed as a Z9 reference
+       b) if the key is a serialized functioncall, it is parsed as such
+       c) the result is evaluated
+       d) if the resulting Z Object is of type Z3 key, this is the result
+       e) if the resulting Z Object is of another Type, we check for a
+          conversion function. The conversion function is applied to that
+          object. Return to step c).
+       f) if there is no conversion function, an error is thrown.
+
+2) Normal JSON serialization
+
+2.1) Every Z Object is serializable as a JSON object.
+
+2.2) The normal serialization results in valid JSON per IETF RFC 7159.
+
+2.3) Every eneyj implementation must support reading the normal JSON
+     serialization.
+
+2.4) Every eneyj implementation may support other serializations. Other
+     serializations will often be more compact or have other advantages.
+
+2.5) The normal JSON serialization serializes a single Z Object as a single
+     JSON Object.
+
+2.6) A single JSON file contains a single Z Object.
+
+x2.7) The keys are sorted alphabetically for the letters and numerically for the
+      number parts of the keys.
+
+x2.8) If the key is Z1K2 Id or Z6K1 Stringvalue the value is always serialized
+      as a simple string.
+
+x2.9) All other values are serialized as JSON objects using normal serialization.
+
+3) Canonical JSON serialization
+
+3.1) The Canonical JSON serialization is a more compact serialization, that is
+     easier to read and write for humans.
+
+3.2) The Canonical JSON serialization is the one used for Wikilambda and the
+     reference implementation for storing Z Objects.
+
+3.3) An eneyj implementation should be able to read the Canonical serialization.
+
+3.4) If an eneyj implementation writes Z Objects out, it must support either the
+     Normal or the Canonical serialization, or both.
+
+x3.5) Z9 References are written as simple string values instead of full-fledged
+      Z Objects.
+
+x3.6) Z1K2 Id and Z6K1 Stringvalue is always written as a simple string value.
+
+x3.7) Z6 Strings are written as Z Objects if they start with a capital letter
+      followed with a digit (unless they are on Z1K2 or Z6K1 keys). Otherwise
+      they are written as simple string values.
+
+x3.8) A Z10 List is serialized as an Array in the JSON serialization. This is
+      skipped if the Z10 List has any keys besides Z10K1 Head and Z10K2 Tail.
+
+4) IDs
+
+4.1) A Z Object may have a Z1K2 ID.
+
+x4.2) A Z Object that is being persisted must have a Z1K2 ID.
+
+4.3) The Z1K2 ID is used to refer to the Z Object.
+
+4.4) Z1K2 IDs must be unique. Two different Z Objects must not have the same
+     Z1K2 ID. Two Z Objects that are equal may have two different Z IDs, though.
+
+x4.5) The Z1K2 ID has the form of a capital letter followed by a natural decimal
+      number.
+
+4.6) Z1K2 IDs starting with Z are reserved for Wikilambda.
+
+*4.7) Z1K2 IDs starting with Y are reserved for the team / organization working
+     together and sharing a global space.
+
+*4.8) Z1K2 IDs starting with X are reserved for personal definitions.
+
+*4.9) Z Objects in the personal space may refer to the team or global space, but
+     team or global space object must not refer to the personal space.
+
+*4.10) Z Object in the team space may refer to the global space, but Z Objects
+       in the global space must not refer to the team space.
+
+4.11) Two Z Objects with the same Z1K2 ID must be equal.  This is modulo QA
+      procedures, caching, and metadata. They are equal using Z33 same.
+
+4.12) A Z Object that is not persisted does not have a Z1K2 ID.
+
+5) Labels
+
+5.1) Every Z Object may have Z1K3 labels in different languages.
+
+5.2) An eneyj implementation may use the labels to render Z Objects.
+
+5.3) An eneyj implementation may use the Z1K3 labels and Z1K5 aliases to
+    support the selection of a Z Object by the user.
+
+x5.4) A label must be unique per language. I.e. only one Z Object may have a
+      specific label in a given language.
+
+x5.5) Labels must consist of letters from the standard alphabet of the given
+      language. Digits or special characters besides the underscore are not
+      allowed.
+
+6) Validation
+
+x6.1) Every Z Object that fulfills the conditions in Section 1 is a
+      well-formed Z Object.
+
+x6.2) A well-formed Z Object gets validated against all functions in their
+      types Z4K3 list of validators.
+
+x6.3) A validator function is a function that takes a single parameter, the
+      instance, and returns Z54 true or else an exception or error.
+
+x6.4) The validators are called one after the other, and only the first
+      exception or error is returned.
+
+x6.5) Instead of continuing with evaluation, the exception or error is raised.
+
+x6.4) A well-formed Z Object that passes all validators of its type is a
+      valid instance of its type and a valid Z Object.
+
+7) Evaluation
+
+x7.1) Every valid Z Object gets evaluated by calling its type's Z4K6 evaluator
+      function.
+
+x7.2) An evaluator function takes a single parameter, the instance.
+
+x7.3) The evaluation result in turn gets validated and evaluated again.
+
+x7.4) This stops when a fix point is reached, i.e. the result of the evaluation
+      is the same as its argument.
+
+8) Linearization
+
+x8.1) There are two different linearization functions: reversible and readable.
+
+x8.2) Reversible linearization results in a string that can be parsed by the
+      parser to build a new Z Object which is Z33 same as the Z Object it
+      was linearized from.
+
+x8.5) Reversible linearization is the result of a call to the Z4K4 linearizer on
+      the given object and the Z180 language to use for linearizaton.
+
+x8.6) Readable linearization is the result of a call to the Z4K4 linearizer on
+      the given object and the Z180 language to use for linearizaton.
+
+x8.7) The language can be Abstract, in which case IDs are used instead of
+      labels.
+
+* It seems we need two different linearizers, and thus should have two
+  different keys.
+* linearizer(one, English) should become "positive_integer("1")", but
+  linearizer([one], English) should be "[one]"
+
+9) Parser / Constructor
+
+x9.1) There is a single function, Z parse, that turns a string into a Z Object,
+      given a language.
+
+x9.2) That function needs to be extend if new syntactic sugar is being added,
+      e.g. for understanding array notation using "[]".
+
+*9.3) Check what's up with constructions.
+
+10) Type system
+
+x10.1) Every Z1 Z Object has a Z1K1 type of type Z4.
+
+x10.2) The type sysem is strict.
+
+x10.3) There is no type hierarchy.
+
+11) Errors
+
+*11.1) Errors are raised for unrecoverable situations.
+
+*11.2) When an error is encountered, it is always raised up as an error.
+
+*11.3) Errors should be wrapped in other errors, that allow to trace the error.
+
+12) Exceptions
+
+*12.1) Exceptions are raised for unexpected, but potentially recoverable
+       situations.
+
+*12.2) A function can choose to handle an exception, but has to do so
+       explicitly.
+
+*12.3) When not being handled, exceptions should be wrapped and raised.
+
+*12.4) Exceptions to be handled must be part of the signature.
+
+*12.5) Exceptions must be handled since they are part of the signature.
+
+13) All functions are pure functions
+
+14) Dispatch functions based on type
+
+== Mapping of fixed, basic Z IDs ==
+
+Z1 - object
+Z2 - pair
+Z3 - key
+Z4 - type
+Z5 - error
+Z6 - string
+Z7 - functioncall
+Z8 - function
+Z9 - reference
+Z10 - list
+Z11 - text
+Z12 - multilingual_text
+Z13 - nil
+Z14 - implementation
+Z15 - exception
+Z16 - code
+Z17 - argument declaration
+Z18 - argument reference
+Z19 - builtin
+Z20 - test
+Z21 - argumentlist
+Z22 o ... validate (static validate)
+Z23 - nothing
+Z24 - everything
+Z25 o ... read
+Z26 - write
+Z27 - Denny Vrandečić
+Z28 - eneyj
+Z29 - version number
+Z30 - iota_kombinator
+Z31 - if
+Z32 - type_of
+Z33 - same
+Z34 - first
+Z35 - second
+Z36 - value
+Z37 - reify
+Z38 - abstract
+Z39 - lambda function to function
+Z40 - lambda function
+Z41 - i_combinator
+Z42 - apply
+Z43 - self_apply
+Z44 - lambda_true
+Z45 - lambda_false
+Z46 - lambda_if
+Z47 - lambda_nand
+Z48 - y_combinator_recursive
+Z49 - y_combinator
+Z50 - boolean
+Z51 - lambda_to_boolean
+Z52 - boolean_to_lambda
+Z53 - nand
+Z54 - true
+Z55 - false
+Z56 - negate
+Z57 - and
+Z58 - or
+Z59 - xor
+Z60 - character
+Z61 - character_to_string
+Z62 - string_to_characterlist
+Z63 - show
+Z64 - head
+Z65 - tail
+Z66 - is_nil
+Z67 - map
+Z68 - reduce
+Z69 - filter
+Z70 - positive integer
+Z71 - lambda_to_positive_integer
+Z72 - positive_integer_to_lambda
+Z73 - lambda_zero
+Z74 - lambda_successor
+Z75 - lambda_predecessor
+Z76 - lambda_is_zero
+Z77 - lambda_add
+Z78 - curry_left
+Z79 - curry_right
+Z80 o binary_file
+Z81 o binary_file_from_url
+...
+Z90 o stream
+...
+Z99 o ... dynamic validate
+Z100 o evaluate
+Z1XX initial set of functions (full)
+Z2XX initial set of table stuff (full)
+Z3XX initial set of literals and then others (full)
+Z4XX initial set of error codes and exception
+
+Z500 meaning
+Z501 all others
+
+== Mapping of ID characters throughout Wikidata and Wikilambda ==
+
+A o Argument (Z Function) - or just K? what is the difference?
+B - Bad objects (with errors)
+C ? Implementation / Code (Z Function) (should be Z)
+E - Entity shapes
+F - Form (L)
+K - Key (Z)
+L - Lexeme
+T ? Test (Z Function) (should be Z)
+P - Property
+Q - Item
+S - Sense (L)
+X o Personal Z Object
+Y o Institutional Z Object
+Z - Z Object
+
+== Questions ==
+
+How does Conversion work, if at all?
+How are Conversions chained?
+Is the Conversion Function attached to the target type or the start type?
+
+Are implementations subentities of functions?
+Or are they entities of their own?
+If the latter, do functions point to their implementations?
+Or do implementations point to their functions?
+
+(Looks like the answer is:
+Implementations are their own objects. Functions point to implementations.
+This way we can store metadata on there.)
+
+Are types and functions the same?
+How do parametrized types work?

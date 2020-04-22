@@ -1,0 +1,62 @@
+{
+  "name": "AbstractText",
+  "version": "0.1.0",
+  "author": [
+    "Denny Vrandecic"
+  ],
+  "url": "https://github.com/google/abstracttext",
+  "descriptionmsg": "abstracttext-desc",
+  "type": "other",
+  "license-name": "Apache-2.0",
+  "APIModules": {
+    "abstracttext": "AbstractTextAPI"
+  },
+  "AutoloadClasses": {
+    "AbstractText\\AbstractTextContent": "includes/AbstractTextContent.php",
+    "AbstractText\\AbstractTextContentHandler": "includes/AbstractTextContentHandler.php",
+    "AbstractText\\AbstractTextHooks": "includes/AbstractTextHooks.php",
+    "AbstractText\\Helper": "includes/Helper.php",
+    "AbstractTextAPI": "includes/AbstractTextAPI.php"
+  },
+  "MessagesDirs": {
+    "AbstractText": [
+      "i18n"
+    ]
+  },
+  "namespaces": [
+    {
+      "id": 78,
+      "constant": "NS_MEANING",
+      "name": "M",
+      "capitallinkoverride": false,
+      "defaultcontentmodel": "Aquinas"
+    },
+    {
+      "id": 79,
+      "constant": "NS_MEANING_TALK",
+      "name": "M talk"
+    }
+  ],
+  "config": {
+    "AbstractTextScriptPath": {
+      "value": "extensions/abstracttext/eneyj/src/eneyj.js",
+      "description": "path to eneyj.js"
+    },
+    "AbstractTextDataPath": {
+      "value": "extensions/abstracttext/eneyj/data/",
+      "description": "path to data directory"
+    }
+  },
+  "ConfigRegistry": {
+    "AbstractText": "GlobalVarConfig::newInstance"
+  },
+  "ContentHandlers": {
+    "Aquinas": "AbstractText\\AbstractTextContentHandler"
+  },
+  "Hooks": {
+    "CodeEditorGetPageLanguage": [
+      "AbstractText\\AbstractTextHooks::onCodeEditorGetPageLanguage"
+    ]
+  },
+  "manifest_version": 2
+}

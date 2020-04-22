@@ -1,0 +1,57 @@
+{
+  "Z1K1": "Z4",
+  "Z1K2": "Z9",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "reference"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Verweis"
+      }
+    ]
+  },
+  "Z4K1": "Z9",
+  "Z4K2": [
+    {
+      "Z1K1": "Z3",
+      "Z1K2": "Z9K1",
+      "Z1K3": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "reference_ID"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "Verweiswert"
+          }
+        ]
+      },
+      "Z1K4": {
+        "Z1K1": "Z12",
+        "Z12K1": [
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z251",
+            "Z11K2": "ID of the entity this refers to"
+          },
+          {
+            "Z1K1": "Z11",
+            "Z11K1": "Z254",
+            "Z11K2": "die ID der zu verweisenden Entitaet"
+          }
+        ]
+      }
+    }
+  ],
+  "Z4K4": "Z26"
+}

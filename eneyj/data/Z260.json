@@ -1,0 +1,22 @@
+{
+  "Z1K1": "Z237",
+  "Z1K2": "Z260",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "German_male_gender"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Deutsches_maennliches_Geschlecht"
+      }
+    ]
+  },
+  "Z237K1": "Z260",
+  "Z237K2": "Z254",
+  "Z237K3": "Z258"
+}

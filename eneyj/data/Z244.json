@@ -1,0 +1,25 @@
+{
+  "Z1K1": "Z236",
+  "Z1K2": "Z244",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "English_grammatical_gender"
+      },
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z254",
+        "Z11K2": "Englisches_grammatikalisches_Geschlecht"
+      }
+    ]
+  },
+  "Z236K1": "Z251",
+  "Z236K2": [
+    "Z245",
+    "Z246",
+    "Z247"
+  ]
+}

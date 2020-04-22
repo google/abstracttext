@@ -1,0 +1,16 @@
+{
+  "Z1K1": "Z522",
+  "Z1K2": "Z524",
+  "Z1K3": {
+    "Z1K1": "Z12",
+    "Z12K1": [
+      {
+        "Z1K1": "Z11",
+        "Z11K1": "Z251",
+        "Z11K2": "subclassification_encyclopedia_book"
+      }
+    ]
+  },
+  "Z522K1": "Z521",
+  "Z522K2": "Z520"
+}

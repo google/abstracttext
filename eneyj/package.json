@@ -1,0 +1,26 @@
+{
+  "name": "eneyj",
+  "version": "0.1.0",
+  "description": "A functional language based on JSON objects.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node node_modules/standard/bin/cmd.js src/*.js src/**/*.js src/**/**/*.js --fix && node src/scripts/formatData.js",
+    "test": "node node_modules/standard/bin/cmd.js src/*.js src/**/*.js src/**/**/*.js --fix && node src/scripts/formatData.js && node src/scripts/labelMap.js && node src/test/test.js",
+    "pushtowiki": "php ../../../maintenance/importTextFiles.php -s 'Import data' --prefix 'M:' --overwrite data/Z*",
+    "pullfromwiki": "php ../../../maintenance/dumpBackup.php --current --filter=namespace:78 > data/backup.xml && node src/scripts/pullFromBackup.js && rm data/backup.xml"
+  },
+  "author": "Denny Vrandečić",
+  "repository": "https://github.com/google/abstracttext/eneyj",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "ajv": "^6.10.2",
+    "debug": "^4.1.0",
+    "historic-readline": "^1.0.8",
+    "json-stringify-safe": "^5.0.1",
+    "sync-request": "^6.1.0",
+    "uuid": "^7.0.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
