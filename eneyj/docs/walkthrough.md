@@ -49,17 +49,17 @@ A permanent Z-Object has a ZID (a Z followed by a number) and is stored on a pag
 > Well, all the Z-Objects should be in the wiki, and when they are changed in the wiki, these changes should be reflected when evaluating Z-Objects.
 The wiki should be the source of truth.
 > Alas, it isn't.
-> For developing the prototype, it proved easier to have the Z-Objects just as files on disk (they are in the directory [`eneyj/data`](data), and not to have a MediaWiki server up and running so the evaluator can access Z-Objects.
+> For developing the prototype, it proved easier to have the Z-Objects just as files on disk (they are in the directory [`eneyj/data`](../data), and not to have a MediaWiki server up and running so the evaluator can access Z-Objects.
 >
-> There are scripts in [`eneyj/scripts`](src/scripts) to either load the Z-Objects from wiki to the data directory, or the other way around.
+> There are scripts in [`eneyj/scripts`](../src/scripts) to either load the Z-Objects from wiki to the data directory, or the other way around.
 > But in the prototype it is up to you to not edit in both places at the same time, or else you won't be able to easily sync them.
 >
-> Accordingly, if you are looking for the file for the Z-Object we discuss here, it is at [`eneyj/data/Z385.json`](data/Z385.json).
+> Accordingly, if you are looking for the file for the Z-Object we discuss here, it is at [`eneyj/data/Z385.json`](../data/Z385.json).
 </details>
 
 Here is a very simple such Z-Object, representing the number 5.
 
-![5 in AbstractText](docs/z385top.png)
+![5 in AbstractText](z385top.png)
 
 We first see the ZID (Z385 in this case), followed by a rendering of the value of this Z-Object (which is, well, 5).
 This is followed by the name (five), and then it shows the type of the Z-Object (since every Z-Object has a type), which is positive integer, and based on the type it also has one further slot, decimal representation, which is filled with the string "5".
@@ -74,13 +74,13 @@ This is followed by the name (five), and then it shows the type of the Z-Object 
 
 Below that, we see a tabular representation of the JSON data, with all IDs replaced with labels. Every Z-Object can have, besides a type, an ID, a label, a description, and other metadata. Labels and descriptions are multilingual texts, which in turn is a list of texts, and texts have a language and a string content.
 
-![Labelized JSON data for 5](docs/z385labelized.png)
+![Labelized JSON data for 5](z385labelized.png)
 
 Now, in reality this is not what is stored in the wiki.
 The structure is as given, but all the keys and identifiers are ZIDs or key ids.
 So, that is why in reality, the JSON structure looks like this (and is displayed in the wiki below the table above).
 
-![Raw JSON data for 5](docs/z385raw.png)
+![Raw JSON data for 5](z385raw.png)
 
 We can see that `Z1K1` is the key id for "id", and `Z1K3` is the key id for "label", and `Z70K1` is the key id for "decimal representation", and the above table shows exactly this translated version.
 
@@ -88,7 +88,7 @@ This is also what you will edit in case you dare to click on the edit button.
 Which obviously leads to one of the biggest todos for the prototype.
 The editing experience leaves a certain room for improvement.
 
-![Editing raw JSON for 5](docs/z385edit.png)
+![Editing raw JSON for 5](z385edit.png)
 
 <details>
 
@@ -98,11 +98,11 @@ The editing experience leaves a certain room for improvement.
 On the top of the wiki page, you can find the button provided by the [Universal Language Selector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) that allows you to change the language.
 There we can for example switch to German, and we see this page be displayed in German.
 
-![Number 5 in German](docs/z385german.png)
+![Number 5 in German](z385german.png)
 
 The JSON data below is also showing all in German.
 
-![German labelized JSON data for 5](docs/z385germanlabelized.png)
+![German labelized JSON data for 5](z385germanlabelized.png)
 
 The system aims to support all MediaWiki languages.
 Let's switch back to English.
@@ -119,7 +119,7 @@ Let's switch back to English.
 The type field of `Z385` in the first screenshot above linked to "positive integer".
 Positive integer is not a primitive type in AbstractText, but is defined in AbstractText itself, in fact as the Z-Object with the ZID `Z70`.
 
-![Positive integer type](docs/z70top.png)
+![Positive integer type](z70top.png)
 
 Types in Wikilambda are Z-Objects of the type Type (`Z4`).
 `Z70` defines the keys that are available for an instance of this type, and whether these keys are optional or not, the labels of the keys, etc.
@@ -127,10 +127,10 @@ A type is defined by validators to check whether a value is valid, a linearizer,
 
 <details>
 
-> The goal is to have [validators](src/validate), linearizers, [evaluators](src/evaluate), etc. all be described as Z-Objects.
+> The goal is to have [validators](../src/validate), linearizers, [evaluators](../src/evaluate), etc. all be described as Z-Objects.
 > In practice, this wasn't yet achieved, and whereas the linearizers and other functions have been internalized (which means turned into functions as Z-Objects instead of being code in eneyj itself), this internalization was only achieved partially.
 > One particular linearization that I wanted to get to was the display of Z-Objects in the wiki.
-> These are currently not even implemented in eneyj, but in the [PHP MediaWiki extension](../includes/AbstractTextContent.php).
+> These are currently not even implemented in eneyj, but in the [PHP MediaWiki extension](../../includes/AbstractTextContent.php).
 > This also means that creating types without changing the code is not really achieved yet, as there are several bits and pieces that need code to be extended.
 > The goal really would be to completely internalize code and allow the creation of new types without changing a single line of eneyj or AbstractText.
 </details>
@@ -145,7 +145,7 @@ The same information is given below again:
 the name of the function (add - again, this is per user language), then fields telling us that this is a function that returns a positive integer, takes two arguments (left and right, both being positive integers).
 So this defines the signature of the function.
 
-![add Z-Object](docs/z144add.png)
+![add Z-Object](z144add.png)
 
 Below that we see a list of implementations for the add function.
 
@@ -158,12 +158,12 @@ Also, it can be instructive to see the implementations of such presumably simple
 
 <details>
 
-> One goal is to get rid of most [builtins](src/builtin).
+> One goal is to get rid of most [builtins](../src/builtin).
 > This isn't mostly that hard, particularly since implementations can be written in JavaScript, so there is really no need to have builtins, really - unless it is to access capabilities that break the restrictions of AbstractText's meager safety and evaluation model.
 > So we expect to have builtins that will stay for things like "get the time", or "make a REST call" or "get the version of eneyj" or similar.
 </details>
 
-![Implementations of add](docs/z144implementations.png)
+![Implementations of add](z144implementations.png)
 
 Here are the four implementations of the add function.
 
@@ -209,7 +209,7 @@ That can be very much improved, obviously.
 > 6.) The current evaluation strategy is very inefficient and has a lot of room for improvement.
 </details>
 
-![Form for evaluating add](docs/z144form.png)
+![Form for evaluating add](z144form.png)
 
 Finally, every page representing a function should have a form that allows to easily call this function with user-provided arguments.
 So in the form above, you can simply enter two numbers, click on submit, and then a JSON answer is being displayed.
@@ -224,7 +224,7 @@ Unfortunately, that isn't as easy to improve as it sounds:
 probably the best way to do that is to introduce functions that parse a type from a string, so that that can be called on the input before giving the arguments to the actual function.
 </details>
 
-![Result of evaluating add](docs/z144result.png)
+![Result of evaluating add](z144result.png)
 
 That's enough about the wiki for now.
 Additionally to what we mentioned there is a new API module to evaluate function calls.
