@@ -67,14 +67,9 @@ The code consists of two main pieces:
 It is an explicit aim to keep the kernel small. Whenever we start to have a
 situation where the kernel keeps growing, we probably want to abstract that
 growth and lift it into the function library.
+That is called internalization.
 
 In the standard setting, the function library lives and is maintained inside
 a wiki. The kernel should make only minimal assumptions about the function
-library, all of which are listed in the following.
+library. These assumptions should written down explicitly.
 
-There are four types:
-
-* eneyj object: the main (and kinda only) type
-* string: shortcuts { type: string, value: s }
-* binary: shortcuts { type: binary, value: b } (TODO)
-* binary stream: shortcuts async { type: binstream, v: bit, next: binstream } (TODO)
