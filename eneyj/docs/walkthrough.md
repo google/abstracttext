@@ -236,6 +236,23 @@ But for development, I found it far easier to use the command line tool describe
 In fact, it can be installed entirely without bothering to install a MediaWiki server and the AbstractText extension.
 Just go to the directory `eneyj` and run `npm install`, and you should be ready to use `eneyj` from the command line (you will need to install [npm](https://www.npmjs.com/) first).
 
+<details>
+
+> After running npm install, you also need to do the following steps. The measure step will take a while.
+
+```
+cd abstracttext/eneyj
+mkdir config
+mkdir config/runs
+node src/scripts/labelMap.js
+node src/scripts/calibrate.js
+node src/scripts/measure.js
+node src/scripts/calibrate.js
+```
+
+> Yes,a better installation process would be nice.
+</details>
+
 Even if you are using only the command line interface, it will likely make sense to read the above section on the MediaWiki extension, as it introduces a lot of the concepts required in the following section.
 
 Regarding the name: eneyj stands for NH which stands for "Natural language generation system Host", and is based on the fact that it was developed to support the creation of natural language from abstract content.
