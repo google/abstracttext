@@ -1,3 +1,7 @@
 AbstractText is just a light-weight wrapper around eneyj.
 
-For more documentations see the folder docs in the folder eneyj.
+Walkthrough: [walkthrough](eneyj/docs/walkthrough.md)
+
+More documentation about eneyj: [docs](eneyj/docs)
+
+Paper: https://arxiv.org/abs/2004.04733
