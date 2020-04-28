@@ -245,8 +245,8 @@ cd abstracttext/eneyj
 mkdir config
 mkdir config/runs
 node src/scripts/labelMap.js
-node src/scripts/calibrate.js
-node src/scripts/measure.js
+cp src/scripts/calibration-initial.json config/calibration.json
+node src/scripts/measure.js --chatty
 node src/scripts/calibrate.js
 ```
 
