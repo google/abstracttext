@@ -57,17 +57,6 @@ The result should be
 
 `eneyj`
 
-Put a configuration file at eneyj/config/config.json with the following
-content:
-
-```
-{
-  "configpath": "abstracttext/eneyj/config/",
-  "datapath": "abstracttext/eneyj/data/"
-  "httppath": "http://localhost/w/index.php?action=raw&title=M:",
-}
-```
-
 ## Code structure
 
 The code consists of two main pieces:
