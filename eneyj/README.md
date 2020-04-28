@@ -37,13 +37,21 @@ If you want to run eneyj stand-alone, you will need node and you might want to
 use npm.
 
 The easiest way to install eneyj is by using npm. Put the code of eneyj
-somewhere, go to the eneyj directory and run
+somewhere, go to the eneyj directory and run the following commands:
 
-`npm install`
+```
+npm install
+mkdir config
+mkdir config/runs
+node src/scripts/labelMap.js
+cp src/scripts/calibration-initial.json config/calibration.json
+node src/scripts/measure.js --chatty
+node src/scripts/calibrate.js
+```
 
 To be sure it worked, you can now run
 
-`node src/cl.js --lang:en 'value(project_name)'`
+`node src/eneyj.js --lang:en 'value(project_name)'`
 
 The result should be
 
