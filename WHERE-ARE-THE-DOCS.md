@@ -1,7 +1,9 @@
-AbstractText is just a light-weight wrapper around eneyj.
+AbstractText is a light-weight wrapper around eneyj.
+eneyj is the more interesting core of this project,
+so most of the documentation is in the docs folder in the eneyj folder.
 
-Walkthrough: [walkthrough](eneyj/docs/walkthrough.md)
+Best introduction: [walkthrough](eneyj/docs/walkthrough.md)
 
-More documentation about eneyj: [docs](eneyj/docs)
+Doc folder: [docs](eneyj/docs)
 
 Paper: https://arxiv.org/abs/2004.04733
