@@ -1,8 +1,11 @@
 eneyj allows to specify functions, literals, and implementations for the
 specified functions.
 
-Currently, the best way to explore and get to know eneyj is through the command
-line interface. Welcome to that path!
+The best way to learn about eneyj is by reading the walkthrough:
+  https://github.com/google/abstracttext/blob/master/eneyj/docs/walkthrough.md
+
+After that explore and get to know eneyj through the command
+line interface.
 
 The command line interface itself has a few commands to help you. Type in
 > .help commands
