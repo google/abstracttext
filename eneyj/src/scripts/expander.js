@@ -13,11 +13,11 @@
 // limitations under the License.
 'use strict'
 
-const i = require('./../index.')
+const i = require('./../index.js')
 const u = i.utils
 const expand = i.expand
 
-const path = u.config('configpath')
+const path = u.config('datapath')
 const id = process.argv[2]
 const content = require(path + id + '.json')
 
