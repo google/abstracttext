@@ -39,11 +39,11 @@
   ],
   "config": {
     "AbstractTextScriptPath": {
-      "value": "extensions/abstracttext/eneyj/src/eneyj.js",
+      "value": "extensions/AbstractText/eneyj/src/eneyj.js",
       "description": "path to eneyj.js"
     },
     "AbstractTextDataPath": {
-      "value": "extensions/abstracttext/eneyj/data/",
+      "value": "extensions/AbstractText/eneyj/data/",
       "description": "path to data directory"
     }
   },

@@ -148,6 +148,7 @@ class AbstractTextContent extends JsonContent {
 		$ztitle = Title::newFromText( $zname, NS_MEANING );
 		$zwp = WikiPage::factory( $ztitle );
 		$zrev = $zwp->getRevision();
+		if ($zrev == NULL) return NULL;
 		$zcontent = $zrev->getContent( Revision::RAW );
 		$ztext = ContentHandler::getContentText( $zcontent );
 		$json = json_decode($ztext, true);
@@ -292,6 +293,7 @@ class AbstractTextContent extends JsonContent {
 
 	public function getFunctionCallDisplayText( $data, $impl, $zlang ) {
 		if ( $impl['Z1K1'] != 'Z7') return 'TODO';
+		if (!array_key_exists('Z7K1', $impl)) return 'TODO';
 		$result = $this->getLinkText( $impl['Z7K1'], $zlang );
 		$result .= '( ';
 
