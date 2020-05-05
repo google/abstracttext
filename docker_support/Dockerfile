@@ -18,12 +18,13 @@ RUN cd /var/www/html/extensions/AbstractText/eneyj && \
 
 COPY DockerLocalSettings.php /var/www/html/DockerLocalSettings.php
 COPY AdditionalLocalSettings.php /tmp/AdditionalLocalSettings.php
+COPY admin_passwd /tmp/admin_passwd
 
 RUN cd /var/www/html && \
-    php maintenance/install.php --server http://localhost:8081 --dbtype sqlite --dbpath /var/www/data --scriptpath "" --pass "vagrant" "Lambda" "admin"
+    php maintenance/install.php --server http://localhost:8081 --dbtype sqlite --dbpath /var/www/data --scriptpath "" --passfile /tmp/admin_passwd "Lambda" "admin"
 RUN cat /tmp/AdditionalLocalSettings.php >> /var/www/html/LocalSettings.php
 
 RUN cd /var/www/html && \
     php maintenance/importTextFiles.php -s "Import data" --prefix "M:" --overwrite extensions/AbstractText/eneyj/data/Z*
 
-RUN chown www-data /var/www/data/*
+RUN chown -R www-data /var/www/data

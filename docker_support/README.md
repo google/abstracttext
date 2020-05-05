@@ -12,12 +12,12 @@ This may take some time as it processes all the Z* files.
 Then to run the resulting container use a standard docker command like:
 
 ```
-docker run --name wikilambda -p 8080:80 -d -v "$PWD/..":/var/www/html/extensions/AbstractText repo/wikilambda
+docker run --name wikilambda -p 8081:80 -d -v "$PWD/..":/var/www/html/extensions/AbstractText repo/wikilambda
 ```
 
 (the -v option replaces the version of AbstractText on the server with the local copy)
 
-The wiki is then available at http://localhost:8080, with content for example at:
+The wiki is then available at http://localhost:8081, with content for example at:
 
-http://localhost:8080/index.php/M:67
+http://localhost:8081/index.php/M:67
 
