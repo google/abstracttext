@@ -19,5 +19,5 @@ docker run --name wikilambda -p 8081:80 -d -v "$PWD/..":/var/www/html/extensions
 
 The wiki is then available at http://localhost:8081, with content for example at:
 
-http://localhost:8081/index.php/M:67
+http://localhost:8081/index.php/M:Z67
 
