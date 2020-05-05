@@ -2,10 +2,13 @@ FROM mediawiki:stable
 LABEL maintainer="arthurpsmith@gmail.com"
 
 RUN apt-get update && apt-get install -q -y git curl nodejs npm
+RUN npm install npm@latest -g
+
 RUN cd /var/www/html/extensions && \
     git clone https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector.git && \
     git clone https://github.com/google/abstracttext.git && \
     mv abstracttext AbstractText
+
 RUN cd /var/www/html/extensions/AbstractText/eneyj && \
     npm install && \
     npm install uuid && \
