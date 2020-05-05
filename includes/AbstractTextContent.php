@@ -125,6 +125,7 @@ class AbstractTextContent extends JsonContent {
 	}
 
 	public function getMultilingualTextValue($key, $data, $zlang) {
+		if ($data == NULL) return NULL;
 		if (!array_key_exists($key, $data)) return NULL;
 		if (!array_key_exists('Z12K1', $data[$key])) return NULL;
 		foreach ($data[$key]['Z12K1'] as $label)
