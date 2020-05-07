@@ -125,6 +125,7 @@ class AbstractTextContent extends JsonContent {
 	}
 
 	public function getMultilingualTextValue($key, $data, $zlang) {
+		if ($data == NULL) return NULL;
 		if (!array_key_exists($key, $data)) return NULL;
 		if (!array_key_exists('Z12K1', $data[$key])) return NULL;
 		foreach ($data[$key]['Z12K1'] as $label)
@@ -294,7 +295,10 @@ class AbstractTextContent extends JsonContent {
 	public function getFunctionCallDisplayText( $data, $impl, $zlang ) {
 		if ( $impl['Z1K1'] != 'Z7') return 'TODO';
 		if (!array_key_exists('Z7K1', $impl)) return 'TODO';
-		$result = $this->getLinkText( $impl['Z7K1'], $zlang );
+		$result = '';
+		if (! is_array($impl['Z7K1']) ) {
+			$result .= $this->getLinkText( $impl['Z7K1'], $zlang );
+		}
 		$result .= '( ';
 
     $first = true;
@@ -306,7 +310,7 @@ class AbstractTextContent extends JsonContent {
 			} else {
 				$result .= ', ';
 			}
-			if (is_array( $value )) {
+			if (is_array( $value ) && array_key_exists('Z1K1', $value)) {
 				if ($value['Z1K1'] == 'Z7') {
 					$result .= $this->getFunctionCallDisplayText( $data, $value, $zlang );
 			  } elseif ($value['Z1K1'] == 'Z18') {
@@ -323,7 +327,11 @@ class AbstractTextContent extends JsonContent {
 					$result .= 'TODO';
 				}
 			} else {
-				$result .= $this->getLinkText( $value, $zlang );
+				if (is_array($value) ) {
+					$result .= 'TODO';
+				} else {
+					$result .= $this->getLinkText( $value, $zlang );
+				}
 			}
 		}
 
