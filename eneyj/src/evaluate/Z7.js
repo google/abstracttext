@@ -20,6 +20,7 @@ const globalAlpha = i.alpha
 const globalBeta = i.beta
 const construct = i.construct
 
+// Alpha conversion (see evaluate function below for explanation)
 const alpha = (data, variableName, guid) => {
   if (data.Z1K1 !== c.FUNCTION_CALL) return data
 
@@ -36,6 +37,7 @@ const alpha = (data, variableName, guid) => {
   return retval
 }
 
+// Beta reduction (see evaluate function below for explanation)
 const beta = (data, variableName, guid, value) => {
   if (data.Z1K1 !== c.FUNCTION_CALL) return data
 
@@ -51,6 +53,19 @@ const beta = (data, variableName, guid, value) => {
   return retval
 }
 
+// This implements the lambda calculus in order to evaluate function calls.
+// In wide strokes: we first perform alpha conversion (this is done by
+// the alpha functions on each of the types), which roughly means that
+// we ensure that all parameter names are bound to the right argument
+// by giving them a globally unique identity.
+// Then we perform beta reduction (this is done by the beta functions
+// on the individual types), which roughly means that we replace the
+// argument reference within a function with the argument value, and
+// thanks to the alpha reduction we can do that safely.
+// This function call returns in effect a curry'd function in case not all
+// arguments are given values. This means that if we call a function
+// with two arguments with only one value, we get back a function with
+// one argument.
 const evaluate = data => {
   if (data.Z1K1 !== c.FUNCTION_CALL) return data
 
