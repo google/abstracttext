@@ -33,6 +33,11 @@ const kee = d => {
   }
 }
 
+// In it's core this calls the individual evaluate function per
+// type of the object. It calls evaluate on the result as well,
+// until a fix point is reached.
+// Evaluation of function calls is in Z7, and is probably the most
+// interesting evaluation.
 const evaluate = (data) => {
   let dKey = data.Z1K2 ? data.Z1K2 : u.write(data)
   if (dKey === undefined) dKey = kee(data)
@@ -62,6 +67,7 @@ const evaluate = (data) => {
   return memorize(d)
 }
 
+// Needed for the evaluation of function calls mostly, see there.
 const alpha = (data, variableName, guid) => {
   const evaluator = u.load(evaluators, __dirname, data.Z1K1)
   u.log('alpha:' + data.Z1K1, u.write(data))
@@ -70,6 +76,7 @@ const alpha = (data, variableName, guid) => {
   return evaluator.alpha(data, variableName, guid)
 }
 
+// Needed for the evaluation of function calls mostly, see there.
 const beta = (data, variableName, guid, value) => {
   const evaluator = u.load(evaluators, __dirname, data.Z1K1)
   u.log('beta:' + data.Z1K1, u.write(data))
