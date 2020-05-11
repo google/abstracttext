@@ -16,6 +16,8 @@ Wikilambda is described in the following paper:
 
 The easiest intro is probably reading the [walkthrough](eneyj/docs/walkthrough.md).
 
+An alternate implementation for eneyj: [graaleneyj](https://github.com/lucaswerkmeister/graaleneyj)
+
 ## Example
 
 The simplest example for testing this is from the command line.
