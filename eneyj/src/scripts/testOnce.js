@@ -27,6 +27,5 @@ let data = getData(baseFunction)
 data = validate(data)
 
 let result = testImplementation(data, testId, implementationId)
-console.log(
-          'Elapsed time: ' + result.ms + 'ms; Errors: ' + result.errors
-)
+console.log('Expected: ' + result.expected + ' Result: ' + result.result)
+console.log('Elapsed time: ' + result.ms + 'ms; Errors: ' + result.errors)
