@@ -11,8 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 'use strict'
+
+const path = require('path')
+const fs = require('fs')
 
 const i = require('./../index.js')
 const u = i.utils
@@ -22,8 +24,15 @@ const evaluate = i.evaluate
 const write = u.write
 const validate = i.validate
 const parse = i.parse
-
 const forgetAll = i.forgetAllEvaluate
+
+const configpath = u.config('configpath')
+
+const getRunData = functionName => {
+  const filename = path.join(configpath, 'runs', functionName + '.json')
+  if (fs.existsSync(filename)) return require(filename)
+  return {}
+}
 
 const testImplementation = (data, testId, implementationId) => {
   var thisTest = null
@@ -65,4 +74,5 @@ const testImplementation = (data, testId, implementationId) => {
   }
 }
 
+exports.getRunData = getRunData
 exports.testImplementation = testImplementation

@@ -58,4 +58,6 @@ exports.denatify = language.denatify
 
 exports.construct = require('./construct/_construct.js').construct
 
-exports.testImplementation = require('./utils/runTest.js').testImplementation
+const rt = require('./utils/tests.js')
+exports.getRunData = rt.getRunData
+exports.testImplementation = rt.testImplementation

@@ -29,6 +29,7 @@ const parse = i.parse
 const forgetAll = i.forgetAllEvaluate
 
 const getData = i.getData
+const getRunData = i.getRunData
 
 const testImplementation = i.testImplementation
 
@@ -107,12 +108,6 @@ if (!dryRun) {
     const systemString = JSON.stringify(systemData, null, 2)
     fs.writeFileSync(configpath + 'system.json', systemString)
   }
-}
-
-const getRunData = functionName => {
-  const filename = path.join(configpath, 'runs', functionName + '.json')
-  if (fs.existsSync(filename)) return require(filename)
-  return {}
 }
 
 for (let f of functions) {
