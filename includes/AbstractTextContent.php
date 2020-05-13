@@ -244,6 +244,7 @@ class AbstractTextContent extends JsonContent {
 	  	$result .= "return type: [[M:$returntypezid|$returnlabel]]\n\n"; // TODO
 		}
 
+		$argument_labels = array();
 		$result .= "=== Arguments ===\n";
 		if (array_key_exists('Z8K1', $data)) {
 			foreach ($data['Z8K1'] as $kobject) {
@@ -251,6 +252,7 @@ class AbstractTextContent extends JsonContent {
 				$kid = $kobject['Z1K2'];
 				$klabel = $this->getLabel( $kobject, $zlang );
 				$klabel = is_null($klabel) ? $kid : $klabel;
+				$argument_labels[$kid] = $klabel;
 				$result .= "==== $klabel ====\n";
 				$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
 				$description = $this->getDescription($kobject, $zlang);
@@ -269,6 +271,41 @@ class AbstractTextContent extends JsonContent {
 				// $result .= "validators: ''todo''\n\n"; // TODO
 				// TODO: display aliases
 			}
+		}
+
+		$result .= "=== Tests ===\n";
+
+		if ( array_key_exists('Z8K3', $data) ) {
+		    foreach ($data['Z8K3'] as $kobject) {
+			$test_id = $kobject['Z1K2'];
+			$result .= "\n==== Test $test_id ====\n";
+			$test = $kobject['Z20K2'];
+			$result .= $this->getLinkText( $test['Z1K1'], $zlang );
+			foreach ($test AS $key => $value) {
+				if ($key == 'Z1K1') continue;
+				$valuelabel = $value;
+				if (! is_array($value) ) {
+					$valueobject = $this->getZObject($value);
+					if (! is_null($valueobject)) {
+						$valuelabel = $this->getLinkText($value, $zlang);
+					}
+				} else {
+					$valuelabel = Helper::toString($value);
+				}
+				if (array_key_exists($key, $argument_labels)) {
+					$label = $argument_labels[$key];
+					$result .= "\n$label: $valuelabel";
+				} else {
+					$result .= "\n$key: $valuelabel";
+				}
+			}
+			$result .= ' - expected result: ';
+			if (! is_array($kobject['Z20K3']) ) {
+				$result .= $this->getLinkText( $kobject['Z20K3'], $zlang );
+			} else {
+				$result .= Helper::toString( $kobject['Z20K3'] );
+			}
+		    }
 		}
 
 		$result .= "=== Implementations ===\n";
