@@ -45,6 +45,10 @@
     "AbstractTextDataPath": {
       "value": "extensions/AbstractText/eneyj/data/",
       "description": "path to data directory"
+    },
+    "AbstractTextCalibrationPath": {
+      "value": "extensions/AbstractText/eneyj/config/runs/",
+      "description": "path to calibration directory"
     }
   },
   "ConfigRegistry": {

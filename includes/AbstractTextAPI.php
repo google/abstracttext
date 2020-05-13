@@ -28,6 +28,25 @@ class AbstractTextAPI extends ApiBase {
 	public function execute() {
 		$params = $this->extractRequestParams();
 
+		if ( array_key_exists('getResults', $params) ) {
+			if ($params['getResults']) {
+				$this->getResultsData($params['function']);
+				return;
+			}
+		} else if ( array_key_exists('runTest', $params) ) {
+			if ($params['runTest']) {
+				$this->runTest($params['function'], $params['testId'], $params['implementationId']);
+				return;
+			}
+		}
+		$this->doZFunctionCall($params);
+	}
+
+	public function mustBePosted() {
+		return false;
+	}
+
+	protected function doZFunctionCall($params) {
 		$function = $params['function'];
 		$arg1 = $params['arg1'];
 		$arg2 = $params['arg2'];
@@ -62,10 +81,6 @@ class AbstractTextAPI extends ApiBase {
 		);
 	}
 
-	public function mustBePosted() {
-		return false;
-	}
-
 	protected function getAllowedParams() {
 		return [
 			'function' => [
@@ -89,6 +104,18 @@ class AbstractTextAPI extends ApiBase {
 			'arg6' => [
 				ApiBase::PARAM_REQUIRED => false,
 			],
+			'getResults' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
+			'runTest' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
+			'testId' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
+			'implementationId' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
 		];
 	}
 
@@ -97,5 +124,17 @@ class AbstractTextAPI extends ApiBase {
 			'action=abstracttext&function=add&arg1=2&arg2=2'
 				=> 'apihelp-abstracttext-example-1',
 		];
+	}
+
+	protected function getResultsData($zid) {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'AbstractText' );
+		$results_dir = $config->get( 'AbstractTextCalibrationPath' );
+		$results_file = $results_dir . $zid . '.json';
+		$results_data = file_get_contents($results_file);
+		$this->getResult()->addValue( null, $this->getModuleName(),
+			$results_data);
+	}
+
+	protected function runTest($zid, $testId, $implementationId) {
 	}
 }
