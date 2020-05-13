@@ -57,3 +57,5 @@ exports.natify = language.natify
 exports.denatify = language.denatify
 
 exports.construct = require('./construct/_construct.js').construct
+
+exports.testImplementation = require('./utils/runTest.js').testImplementation
