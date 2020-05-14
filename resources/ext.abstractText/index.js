@@ -23,9 +23,10 @@ $( function() {
   $.get("/api.php?action=abstracttext&function=" + zid + "&getResults=1&format=json",
     function( data ) {
       const results = data.abstracttext;
-      $( '.test_result' ).each(function() {
-	addTestResults($( this ), results);
-     });
-      
+      if (results !== null) {
+        $( '.test_result' ).each(function() {
+           addTestResults($( this ), results);
+       });
+      }
     });
 });
