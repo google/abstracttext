@@ -56,7 +56,9 @@ class AbstractTextContent extends JsonContent {
     $data_arg = escapeshellarg($data);
 		$title_name = $title->getText();
 
-    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
+//    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
+# Somehow this was nont working with the --http setting
+    $cmd = "node $script_path --lang:$lang 'Z36($title_name)'";
     $wikitext .= shell_exec( $cmd );
 		$json = json_decode($data, true);
 		$label = $this->getLabel($json, $zlang);
