@@ -19,13 +19,40 @@ const getData = i.getData
 
 const testImplementation = i.testImplementation
 
-let baseFunction = process.argv[2]
-let testId = process.argv[3]
-let implementationId = process.argv[4]
+let jsonFormat = false
+
+let argRest = 2
+while (process.argv[argRest] !== undefined && process.argv[argRest][0] === '-') {
+  let unknownArg = true
+  if (process.argv[argRest] === '--json') {
+    jsonFormat = true
+    unknownArg = false
+  }
+  if (unknownArg) {
+    console.log('ERROR - Unknown argument: ' + process.argv[argRest])
+    process.exit(1)
+  }
+  argRest++
+}
+
+var baseFunction;
+var testId;
+var implementationId;
+
+if (process.argv.length > argRest+2) {
+  [baseFunction, testId, implementationId] = process.argv.slice(argRest)
+} else {
+    console.log('ERROR - Missing argument(s)')
+    process.exit(1)
+}
 
 let data = getData(baseFunction)
 data = validate(data)
 
 let result = testImplementation(data, testId, implementationId)
-console.log('Expected: ' + result.expected + ' Result: ' + result.result)
-console.log('Elapsed time: ' + result.ms + 'ms; Errors: ' + result.errors)
+if (jsonFormat) {
+  console.log(JSON.stringify(result))
+} else {
+  console.log('Expected: ' + result.expected + ' Result: ' + result.result)
+  console.log('Elapsed time: ' + result.ms + 'ms; Errors: ' + result.errors)
+}

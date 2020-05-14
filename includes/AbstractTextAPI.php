@@ -33,8 +33,9 @@ class AbstractTextAPI extends ApiBase {
 				$this->getResultsData($params['function']);
 				return;
 			}
-		} else if ( array_key_exists('runTest', $params) ) {
-			if ($params['runTest']) {
+		}
+		if ( array_key_exists('runATest', $params) ) {
+			if ($params['runATest']) {
 				$this->runTest($params['function'], $params['testId'], $params['implementationId']);
 				return;
 			}
@@ -107,7 +108,7 @@ class AbstractTextAPI extends ApiBase {
 			'getResults' => [
 				ApiBase::PARAM_REQUIRED => false,
 			],
-			'runTest' => [
+			'runATest' => [
 				ApiBase::PARAM_REQUIRED => false,
 			],
 			'testId' => [
@@ -137,5 +138,11 @@ class AbstractTextAPI extends ApiBase {
 	}
 
 	protected function runTest($zid, $testId, $implementationId) {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'AbstractText' );
+		$script_path = $config->get( 'AbstractTextScriptPath' );
+		$cmd = "node $script_path/../scripts/testOnce.js --json $zid $testId $implementationId";
+		$result = shell_exec( $cmd );
+		$results_array = json_decode($result, TRUE);
+		$this->getResult()->addValue( null, 'testResults', $results_array);
 	}
 }
