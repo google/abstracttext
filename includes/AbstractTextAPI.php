@@ -131,8 +131,9 @@ class AbstractTextAPI extends ApiBase {
 		$results_dir = $config->get( 'AbstractTextCalibrationPath' );
 		$results_file = $results_dir . $zid . '.json';
 		$results_data = file_get_contents($results_file);
+		$results_array = json_decode($results_data, TRUE);
 		$this->getResult()->addValue( null, $this->getModuleName(),
-			$results_data);
+			$results_array);
 	}
 
 	protected function runTest($zid, $testId, $implementationId) {

@@ -121,6 +121,7 @@ class AbstractTextContent extends JsonContent {
 
 		$parserOutput = parent::getParserOutput( $title, $revId, $options, $generateHtml );
 		$parserOutput->setText( $display . $parserOutput->getText() );
+		$parserOutput->addModules( 'ext.abstractText' );
 		return $parserOutput;
 	}
 
@@ -234,7 +235,6 @@ class AbstractTextContent extends JsonContent {
 		$typeobject = $this->getZObject( $data['Z1K1'] );
 		if (is_null($typeobject)) return NULL;
 		if (!array_key_exists('Z4K2', $typeobject)) return NULL;
-		// TODO: tests
 
     if (array_key_exists('Z8K2', $data)) {
   		$returntypezid = $data['Z8K2'];
@@ -273,6 +273,23 @@ class AbstractTextContent extends JsonContent {
 			}
 		}
 
+		$result .= "=== Implementations ===\n";
+		foreach ($data['Z8K4'] as $kobject) {
+			$cid = $kobject['Z1K2'];
+			$result .= "==== Implementation $cid ====\n";
+			$impl = $kobject['Z14K1'];
+			if ($impl['Z1K1'] == 'Z16') {
+				$result .= $impl['Z16K1'];
+				$result .= "\n\n<code>\n" . str_replace("\n", "\n\n", $impl['Z16K2']) . "\n</code>\n\n";
+			} elseif ($impl['Z1K1'] == 'Z7') {
+				$result .= $this->getFunctionCallDisplayText( $data, $impl, $zlang );
+				$result .= "\n\n";
+			} else {
+				$result .= Helper::toString( $impl );
+				$result .= "\n\n";
+  			}
+		}
+
 		$result .= "=== Tests ===\n";
 
 		if ( array_key_exists('Z8K3', $data) ) {
@@ -294,36 +311,24 @@ class AbstractTextContent extends JsonContent {
 				}
 				if (array_key_exists($key, $argument_labels)) {
 					$label = $argument_labels[$key];
-					$result .= "\n$label: $valuelabel";
+					$result .= " $label: $valuelabel";
 				} else {
-					$result .= "\n$key: $valuelabel";
+					$result .= " $key: $valuelabel";
 				}
 			}
 			$result .= ' - expected result: ';
-			if (! is_array($kobject['Z20K3']) ) {
-				$result .= $this->getLinkText( $kobject['Z20K3'], $zlang );
+			$expected = $kobject['Z20K3'];
+			if (! is_array($expected) ) {
+				if (substr($expected, 0, 1) == 'Z') {
+					$result .= $this->getLinkText( $expected, $zlang );
+				} else {
+					$result .= "'" . $expected . "'";
+				}
 			} else {
-				$result .= Helper::toString( $kobject['Z20K3'] );
+				$result .= Helper::toString( $expected );
 			}
+			$result .= '<div class="test_result" data-testid="' . $test_id . '"></div>' ;
 		    }
-		}
-
-		$result .= "=== Implementations ===\n";
-
-		foreach ($data['Z8K4'] as $kobject) {
-			$cid = $kobject['Z1K2'];
-			$result .= "==== Implementation $cid ====\n";
-			$impl = $kobject['Z14K1'];
-			if ($impl['Z1K1'] == 'Z16') {
-				$result .= $impl['Z16K1'];
-				$result .= "\n\n<code>\n" . str_replace("\n", "\n\n", $impl['Z16K2']) . "\n</code>\n\n";
-			} elseif ($impl['Z1K1'] == 'Z7') {
-				$result .= $this->getFunctionCallDisplayText( $data, $impl, $zlang );
-				$result .= "\n\n";
-			} else {
-				$result .= Helper::toString( $impl );
-				$result .= "\n\n";
-  		}
 		}
 
 		return $result;

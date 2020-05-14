@@ -62,5 +62,13 @@
       "AbstractText\\AbstractTextHooks::onCodeEditorGetPageLanguage"
     ]
   },
+  "ResourceModules": {
+    "ext.abstractText": {
+      "packageFiles": [
+          "extensions/AbstractText/resources/ext.abstractText/index.js"
+      ],
+      "styles": "extensions/AbstractText/resources/ext.abstractText.css"
+    }
+  },
   "manifest_version": 2
 }
