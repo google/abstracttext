@@ -29,6 +29,9 @@ const parse = i.parse
 const forgetAll = i.forgetAllEvaluate
 
 const getData = i.getData
+const getRunData = i.getRunData
+
+const testImplementation = i.testImplementation
 
 const datapath = u.config('datapath')
 const configpath = u.config('configpath')
@@ -107,12 +110,6 @@ if (!dryRun) {
   }
 }
 
-const getRunData = functionName => {
-  const filename = path.join(configpath, 'runs', functionName + '.json')
-  if (fs.existsSync(filename)) return require(filename)
-  return {}
-}
-
 for (let f of functions) {
   if (f[0] === '_' && f[1] === '_') continue
   if (f.endsWith('.json')) f = f.slice(0, -5)
@@ -136,47 +133,26 @@ for (let f of functions) {
           errors: 0
         }
       }
-      let call = {
-        Z7K1: {
-          Z1K1: c.FUNCTION,
-          Z1K2: data.Z1K2,
-          Z8K1: data.Z8K1,
-          Z8K2: data.Z8K2,
-          Z8K4: i.listify([{
-            Z1K1: c.IMPLEMENTATION,
-            Z1K2: implementation.Z1K2,
-            Z14K1: implementation.Z14K1
-          }])
-        },
-        ...test.Z20K2,
-        Z1K1: c.FUNCTION_CALL
-      }
-      call = validate(call)
-      forgetAll()
-      let evalStart = new Date()
-      let result = evaluate(call)
-      let evalTime = new Date() - evalStart
-      result = write(evaluate(parse('Z36(' + write(result) + ')')))
-      const expected = write(evaluate(parse('Z36(' + write(test.Z20K3) + ')')))
+      let result = testImplementation(data, test.Z1K2, implementation.Z1K2)
       const runs = results[test.Z1K2][implementation.Z1K2].runs
       const errors = results[test.Z1K2][implementation.Z1K2].errors
       const avgTime = results[test.Z1K2][implementation.Z1K2].average_ms
       results[test.Z1K2][implementation.Z1K2] = {
         runs: runs + 1,
-        average_ms: parseInt(((avgTime * runs) + evalTime) / (runs + 1)),
-        errors: errors + (result === expected ? 0 : 1)
+        average_ms: parseInt(((avgTime * runs) + result.ms) / (runs + 1)),
+        errors: errors + result.errors
       }
       if (printTime) {
         console.log(
           test.Z1K2 + ' ' + implementation.Z1K2 + ' ' +
-          evalTime + ' ms (Ø ' + avgTime + ' ms in ' + runs + ' runs)'
+          result.ms + ' ms (Ø ' + avgTime + ' ms in ' + runs + ' runs)'
         )
       }
-      if (printErrors && result !== expected) {
+      if (printErrors && result.errors === 1) {
         console.log(f, test.Z1K2, implementation.Z1K2)
         console.log(write(call))
-        console.log('Actual  : ' + result)
-        console.log('Expected: ' + expected)
+        console.log('Actual  : ' + result.result)
+        console.log('Expected: ' + result.expected)
         console.log()
       }
     }

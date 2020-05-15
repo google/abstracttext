@@ -45,6 +45,10 @@
     "AbstractTextDataPath": {
       "value": "extensions/AbstractText/eneyj/data/",
       "description": "path to data directory"
+    },
+    "AbstractTextCalibrationPath": {
+      "value": "extensions/AbstractText/eneyj/config/runs/",
+      "description": "path to calibration directory"
     }
   },
   "ConfigRegistry": {
@@ -57,6 +61,14 @@
     "CodeEditorGetPageLanguage": [
       "AbstractText\\AbstractTextHooks::onCodeEditorGetPageLanguage"
     ]
+  },
+  "ResourceModules": {
+    "ext.abstractText": {
+      "packageFiles": [
+          "extensions/AbstractText/resources/ext.abstractText/index.js"
+      ],
+      "styles": "extensions/AbstractText/resources/ext.abstractText.css"
+    }
   },
   "manifest_version": 2
 }

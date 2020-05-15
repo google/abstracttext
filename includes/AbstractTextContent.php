@@ -56,7 +56,9 @@ class AbstractTextContent extends JsonContent {
     $data_arg = escapeshellarg($data);
 		$title_name = $title->getText();
 
-    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
+//    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
+# Somehow this was not working with the --http setting
+    $cmd = "node $script_path --lang:$lang 'Z36($title_name)'";
     $wikitext .= shell_exec( $cmd );
 		$json = json_decode($data, true);
 		$label = $this->getLabel($json, $zlang);
@@ -121,6 +123,7 @@ class AbstractTextContent extends JsonContent {
 
 		$parserOutput = parent::getParserOutput( $title, $revId, $options, $generateHtml );
 		$parserOutput->setText( $display . $parserOutput->getText() );
+		$parserOutput->addModules( 'ext.abstractText' );
 		return $parserOutput;
 	}
 
@@ -234,7 +237,6 @@ class AbstractTextContent extends JsonContent {
 		$typeobject = $this->getZObject( $data['Z1K1'] );
 		if (is_null($typeobject)) return NULL;
 		if (!array_key_exists('Z4K2', $typeobject)) return NULL;
-		// TODO: tests
 
     if (array_key_exists('Z8K2', $data)) {
   		$returntypezid = $data['Z8K2'];
@@ -244,6 +246,7 @@ class AbstractTextContent extends JsonContent {
 	  	$result .= "return type: [[M:$returntypezid|$returnlabel]]\n\n"; // TODO
 		}
 
+		$argument_labels = array();
 		$result .= "=== Arguments ===\n";
 		if (array_key_exists('Z8K1', $data)) {
 			foreach ($data['Z8K1'] as $kobject) {
@@ -251,6 +254,7 @@ class AbstractTextContent extends JsonContent {
 				$kid = $kobject['Z1K2'];
 				$klabel = $this->getLabel( $kobject, $zlang );
 				$klabel = is_null($klabel) ? $kid : $klabel;
+				$argument_labels[$kid] = $klabel;
 				$result .= "==== $klabel ====\n";
 				$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
 				$description = $this->getDescription($kobject, $zlang);
@@ -272,7 +276,6 @@ class AbstractTextContent extends JsonContent {
 		}
 
 		$result .= "=== Implementations ===\n";
-
 		foreach ($data['Z8K4'] as $kobject) {
 			$cid = $kobject['Z1K2'];
 			$result .= "==== Implementation $cid ====\n";
@@ -286,7 +289,48 @@ class AbstractTextContent extends JsonContent {
 			} else {
 				$result .= Helper::toString( $impl );
 				$result .= "\n\n";
-  		}
+  			}
+		}
+
+		$result .= "=== Tests ===\n";
+
+		if ( array_key_exists('Z8K3', $data) ) {
+		    foreach ($data['Z8K3'] as $kobject) {
+			$test_id = $kobject['Z1K2'];
+			$result .= "\n==== Test $test_id ====\n";
+			$test = $kobject['Z20K2'];
+			$result .= $this->getLinkText( $test['Z1K1'], $zlang );
+			foreach ($test AS $key => $value) {
+				if ($key == 'Z1K1') continue;
+				$valuelabel = $value;
+				if (! is_array($value) ) {
+					$valueobject = $this->getZObject($value);
+					if (! is_null($valueobject)) {
+						$valuelabel = $this->getLinkText($value, $zlang);
+					}
+				} else {
+					$valuelabel = Helper::toString($value);
+				}
+				if (array_key_exists($key, $argument_labels)) {
+					$label = $argument_labels[$key];
+					$result .= " $label: $valuelabel";
+				} else {
+					$result .= " $key: $valuelabel";
+				}
+			}
+			$result .= ' - expected result: ';
+			$expected = $kobject['Z20K3'];
+			if (! is_array($expected) ) {
+				if (substr($expected, 0, 1) == 'Z') {
+					$result .= $this->getLinkText( $expected, $zlang );
+				} else {
+					$result .= "'" . $expected . "'";
+				}
+			} else {
+				$result .= Helper::toString( $expected );
+			}
+			$result .= '<div class="test_result" data-testid="' . $test_id . '"></div>' ;
+		    }
 		}
 
 		return $result;
