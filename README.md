@@ -36,6 +36,9 @@ Wikipedien sind Enzyklopädien.
 
 ## Installation
 
+The canonical and easiest way to run abstracttext is to use docker as
+described here: [docker support](docker_support/README.md)
+
 AbstractText is a light-weight wrapper to allow access to eneyj (see there).
 AbstractText and eneyj are both not very polished.
 eneyj is the JavaScript code that actually evaluates the the functions.
