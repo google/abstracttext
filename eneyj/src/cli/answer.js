@@ -19,6 +19,7 @@ const i = require('../index.js')
 const u = i.utils
 const c = i.constants
 const evaluate = i.evaluate
+const expand = i.expand
 // const write = u.write
 const validate = i.validate
 const parse = i.parse
@@ -31,7 +32,7 @@ const canonicalize = i.canonicalize
 const answer = (call, settings) => {
   const startTime = new Date()
   if (call[0] === '{') {
-    var data = delabelize(JSON.parse(call), settings.parselang)
+    var data = expand(delabelize(JSON.parse(call), settings.parselang))
   } else {
     data = parse(call, settings.parselang)
   }
