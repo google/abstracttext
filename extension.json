@@ -11,17 +11,24 @@
   "APIModules": {
     "abstracttext": "AbstractTextAPI"
   },
+  "AutoloadNamespaces": {
+    "AbstractText\\": "includes/"
+  },
   "AutoloadClasses": {
-    "AbstractText\\AbstractTextContent": "includes/AbstractTextContent.php",
-    "AbstractText\\AbstractTextContentHandler": "includes/AbstractTextContentHandler.php",
-    "AbstractText\\AbstractTextHooks": "includes/AbstractTextHooks.php",
-    "AbstractText\\Helper": "includes/Helper.php",
     "AbstractTextAPI": "includes/AbstractTextAPI.php"
+  },
+  "SpecialPages": {
+    "ObjectsByType": "AbstractText\\SpecialObjectsByType",
+    "FunctionsByReturnType": "AbstractText\\SpecialFunctionsByReturnType",
+    "FunctionsByArguments": "AbstractText\\SpecialFunctionsByArguments"
   },
   "MessagesDirs": {
     "AbstractText": [
       "i18n"
     ]
+  },
+  "ExtensionMessagesFiles": {
+     "AbstractTextAlias": "i18n/AbstractText.i18n.alias.php"
   },
   "namespaces": [
     {
