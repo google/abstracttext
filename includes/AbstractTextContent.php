@@ -24,12 +24,15 @@ use ParserOptions;
 use ParserOutput;
 use FormatJson;
 use MediaWiki\MediaWikiServices;
+use AbstractText\TypesRepo;
 
 class AbstractTextContent extends JsonContent {
 	private $linked_zobjects = array();
+	private $type_data = array();
+	private $zid;
 
 	function __construct( $text ) {
-			parent::__construct( $text, 'Aquinas' );
+		parent::__construct( $text, 'Aquinas' );
 	}
 
 	public function getParserOutput(
@@ -38,7 +41,7 @@ class AbstractTextContent extends JsonContent {
 			ParserOptions $options = null,
 			$generateHtml = true
 	) {
-    $data = $this->getNativeData();
+		$data = $this->getNativeData();
 
 		global $wgLang;
 		$lang = $wgLang->getCode();
@@ -57,6 +60,7 @@ class AbstractTextContent extends JsonContent {
     // TODO and returns and displays the result
     $data_arg = escapeshellarg($data);
 		$title_name = $title->getText();
+		$this->zid = $title_name;
 
 //    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
 # Somehow this was not working with the --http setting
@@ -73,6 +77,8 @@ class AbstractTextContent extends JsonContent {
 		$wikitext .= "$typekeylabel: ";
 		$wikitext .= $this->getLinkText( $typeid, $zlang );
 		$wikitext .= "\n\n";
+
+		$this->type_data['type'] = $typeid;
 
 		$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
 		$description = $this->getDescription($json, $zlang);
@@ -126,6 +132,9 @@ class AbstractTextContent extends JsonContent {
 		$parserOutput->setText( $display . $parserOutput->getText() );
 		$parserOutput->addModules( 'ext.abstractText' );
 		$this->addZobjectLinks( $parserOutput );
+
+		$this->updateTypeData($title_name);
+
 		return $parserOutput;
 	}
 
@@ -250,7 +259,9 @@ class AbstractTextContent extends JsonContent {
 			$result .= "return type: ";
 			$result .= $this->getLinkText( $returntypezid, $zlang );
 		  	$result .= "\n\n";
+			$this->type_data['return_type'] = $returntypezid;
 		}
+		$this->type_data['arg_types'] = array();
 
 		$argument_labels = array();
 		$result .= "=== Arguments ===\n";
@@ -274,6 +285,9 @@ class AbstractTextContent extends JsonContent {
 				$result .= "type: ";
 				$result .= $this->getLinkText( $argtypezid, $zlang );
 				$result .= "\n\n";
+
+				$this->type_data['arg_types'][$argtypezid] = 1;
+
 				// $result .= "validators: ''todo''\n\n"; // TODO
 				// TODO: display aliases
 			}
@@ -404,6 +418,19 @@ class AbstractTextContent extends JsonContent {
 			} else {
 				$parserOutput->addLink( $ztitle );
 			}
+		}
+	}
+
+	// Update new database tables for this entry
+	// This is really the wrong place for this, it probably
+	// should be in a "Hook" somewhere. Also it won't handle
+	// deleted entries correctly at all, they'll still be there!
+	public function updateTypeData() {
+		// Compare type data with what was previously stored
+		$repo = new TypesRepo();
+		$old_type_data = $repo->getObjectData( $this->zid );
+		if ( $this->type_data != $old_type_data ) {
+			$repo->updateObjectData($this->zid, $this->type_data);
 		}
 	}
 
