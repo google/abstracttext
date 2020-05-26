@@ -67,7 +67,8 @@
   "Hooks": {
     "CodeEditorGetPageLanguage": [
       "AbstractText\\AbstractTextHooks::onCodeEditorGetPageLanguage"
-    ]
+    ],
+    "LoadExtensionSchemaUpdates": "AbstractText\\AbstractTextHooks::onLoadExtensionSchemaUpdates"
   },
   "ResourceModules": {
     "ext.abstractText": {

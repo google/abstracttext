@@ -16,6 +16,7 @@
 namespace AbstractText;
 
 use ContentHandler;
+use DatabaseUpdater;
 
 class AbstractTextHooks {
 
@@ -24,6 +25,14 @@ class AbstractTextHooks {
 			$lang = 'json';
 		}
 		return true;
+	}
+
+	// Add table to store type relations for quick lookups
+	public static function onLoadExtensionSchemaUpdates( $updater ) {
+		$updater->addExtensionTable(
+			'abstract_text_type',
+			 __DIR__ . '/sql/create_types_table.sql'
+		);
 	}
 
 }
