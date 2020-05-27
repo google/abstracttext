@@ -13,21 +13,35 @@ class SpecialFunctionsByArguments extends SpecialPage {
 		$output = $this->getOutput();
 		$repo = new TypesRepo();
 
+		global $wgLang;
+		$lang = $wgLang->getCode();
+		$zlang = 'Z251';
+		if ($lang == 'de') $zlang = 'Z254';
+
 		$types_list = $repo->getTypes();
 
 		$this->setHeaders();
-		$wikitext = "== Available types ==\n";
-		foreach ($types_list AS $type) {
-			$wikitext .= "# [[Special:FunctionsByArguments/$type|$type]]\n";
-		}
-		if ( $par !== null ) {
-			$wikitext .= "\n== List of objects with argument type $par ==\n";
+		$wikitext = '';
+		if ( $par !== null && $par != '' ) {
+			$parlabel = Helper::zLabel($par, $zlang);
+			$wikitext .= "\n== Functions with $parlabel ($par) argument(s) ==\n";
+			$wikitext .= "<div class='at-zlist'><ul>\n";
 
 			$zobjects_list = $repo->getObjectsByArgumentType($par);
 			foreach ($zobjects_list AS $zobject) {
-				$wikitext .= "# [[M:$zobject|$zobject]]\n";
+				$label = Helper::zLabel($zobject, $zlang);
+				$wikitext .= "<li>[[M:$zobject|$label]] ($zobject)</li>\n";
 			}
+			$wikitext .= "</ul></div>\n";
 		}
+		$wikitext .= "== Types ==\n";
+		$wikitext .= "<div class='at-typelist'><ul>\n";
+		foreach ($types_list AS $type) {
+			$label = Helper::zLabel($type, $zlang);
+			$wikitext .= "<li>[[Special:FunctionsByArguments/$type|$label]] ($type)</li>\n";
+		}
+		$wikitext .= "</ul></div>\n";
 		$output->addWikiTextAsInterface( $wikitext );
+		$output->addModules( 'ext.abstractText' );
 	}
 }

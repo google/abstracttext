@@ -14,21 +14,35 @@ class SpecialObjectsByType extends SpecialPage {
 		$output = $this->getOutput();
 		$repo = new TypesRepo();
 
+		global $wgLang;
+		$lang = $wgLang->getCode();
+		$zlang = 'Z251';
+		if ($lang == 'de') $zlang = 'Z254';
+
 		$types_list = $repo->getTypes();
 
 		$this->setHeaders();
-		$wikitext = "== Available types ==\n";
-		foreach ($types_list AS $type) {
-			$wikitext .= "# [[Special:ObjectsByType/$type|$type]]\n";
-		}
-		if ( $par !== null ) {
-			$wikitext .= "\n== List of objects of type $par ==\n";
+		$wikitext = '';
+		if ( $par !== null && $par != '' ) {
+			$parlabel = Helper::zLabel($par, $zlang);
+			$wikitext .= "\n== $parlabel ($par) objects ==\n";
+			$wikitext .= "<div class='at-zlist'><ul>\n";
 
 			$zobjects_list = $repo->getObjectsByType($par);
 			foreach ($zobjects_list AS $zobject) {
-				$wikitext .= "# [[M:$zobject|$zobject]]\n";
+				$label = Helper::zLabel($zobject, $zlang);
+				$wikitext .= "<li>[[M:$zobject|$label]] ($zobject)</li>\n";
 			}
+			$wikitext .= "</ul></div>\n";
 		}
+		$wikitext .= "== Types ==\n";
+		$wikitext .= "<div class='at-typelist'><ul>\n";
+		foreach ($types_list AS $type) {
+			$label = Helper::zLabel($type, $zlang);
+			$wikitext .= "<li>[[Special:ObjectsByType/$type|$label]] ($type)</li>\n";
+		}
+		$wikitext .= "</ul></div>\n";
 		$output->addWikiTextAsInterface( $wikitext );
+		$output->addModules( 'ext.abstractText' );
 	}
 }
