@@ -14,12 +14,7 @@ class SpecialObjectsByType extends SpecialPage {
 		$output = $this->getOutput();
 		$repo = new TypesRepo();
 
-		global $wgLang;
-		$lang = $wgLang->getCode();
-		$zlang = 'Z251';
-		if ($lang == 'de') $zlang = 'Z254';
-
-		$types_list = $repo->getTypes();
+		$zlang = Helper::zLang();
 
 		$this->setHeaders();
 		$wikitext = '';
@@ -29,20 +24,24 @@ class SpecialObjectsByType extends SpecialPage {
 			$wikitext .= "<div class='at-zlist'><ul>\n";
 
 			$zobjects_list = $repo->getObjectsByType($par);
-			foreach ($zobjects_list AS $zobject) {
-				$label = Helper::zLabel($zobject, $zlang);
+			$zobjects_list = Helper::sorted_labeled_list($zobjects_list, $zlang);
+			foreach ($zobjects_list AS $zobject => $label) {
 				$wikitext .= "<li>[[M:$zobject|$label]] ($zobject)</li>\n";
 			}
 			$wikitext .= "</ul></div>\n";
 		}
+
+		$types_list = $repo->getTypes();
+		$types_list = Helper::sorted_labeled_list($types_list, $zlang);
+
 		$wikitext .= "== Types ==\n";
 		$wikitext .= "<div class='at-typelist'><ul>\n";
-		foreach ($types_list AS $type) {
-			$label = Helper::zLabel($type, $zlang);
+		foreach ($types_list AS $type => $label) {
 			$wikitext .= "<li>[[Special:ObjectsByType/$type|$label]] ($type)</li>\n";
 		}
 		$wikitext .= "</ul></div>\n";
 		$output->addWikiTextAsInterface( $wikitext );
 		$output->addModules( 'ext.abstractText' );
 	}
+
 }

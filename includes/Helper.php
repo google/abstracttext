@@ -73,4 +73,23 @@ class Helper {
 		if ($lang == 'Z254') $lang = 'de';
 		return $data[$key]['Z12K1'][0]['Z11K2'] . '<sub>' . $lang . '</sub>';
 	}
+
+	public static function sorted_labeled_list ($zid_list, $zlang) {
+		$labels = [];
+		foreach ($zid_list AS $zid) {
+			$labels[$zid] = Helper::zLabel($zid, $zlang);
+		}
+		asort($labels);
+
+		return $labels;
+	}
+
+	public static function zLang () {
+		global $wgLang;
+		$lang = $wgLang->getCode();
+		$zlang = 'Z251';
+		if ($lang == 'de') $zlang = 'Z254';
+
+		return $zlang;
+	}
 }
