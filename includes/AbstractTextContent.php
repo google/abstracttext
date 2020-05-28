@@ -25,6 +25,7 @@ use ParserOutput;
 use FormatJson;
 use MediaWiki\MediaWikiServices;
 use AbstractText\TypesRepo;
+use AbstractText\EneyjServer;
 
 class AbstractTextContent extends JsonContent {
 	private $linked_zobjects = array();
@@ -51,21 +52,10 @@ class AbstractTextContent extends JsonContent {
 		Helper::log( 'Call Meaning::display {l} {n}', [ 'l' => $lang, 'n' => $title->getText() ] );
 		$wikitext = "__NOEDITSECTION__\n__NOTOC__\n";
 
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'AbstractText' );
-		$script_path = $config->get( 'AbstractTextScriptPath' );
-		$murl = $config->get( 'AbstractTextDataPath' );
-
-    // TODO this is a major security leak that should never be deployed
-    // TODO it can easily execute any arbitrary code on your machine
-    // TODO and returns and displays the result
-    $data_arg = escapeshellarg($data);
 		$title_name = $title->getText();
 		$this->zid = $title_name;
+		$wikitext .= EneyjServer::call("Z36($title_name)", $lang);
 
-//    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
-# Somehow this was not working with the --http setting
-    $cmd = "node $script_path --lang:$lang 'Z36($title_name)'";
-    $wikitext .= shell_exec( $cmd );
 		$json = json_decode($data, true);
 		$label = Helper::getLabel($json, $zlang);
 		$zid = $json['Z1K2'];
@@ -118,11 +108,7 @@ class AbstractTextContent extends JsonContent {
 
     $display .= "<h2>JSON data</h2>";
 
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'AbstractText' );
-		$script_path = $config->get( 'AbstractTextScriptPath' );
-
-		$cmd = "node $script_path --labellang:$lang --labelize --nocolor $zid";
-		$text = shell_exec( $cmd );
+		$text = EneyjServer::call($zid, $lang);
 		$json = FormatJson::decode( $text, true );
 		$display .= $this->objectTable( $json );
 
