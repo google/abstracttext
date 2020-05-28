@@ -108,7 +108,7 @@ class AbstractTextContent extends JsonContent {
 
     $display .= "<h2>JSON data</h2>";
 
-		$text = EneyjServer::call($zid, $lang);
+		$text = EneyjServer::labelize($zid, $lang);
 		$json = FormatJson::decode( $text, true );
 		$display .= $this->objectTable( $json );
 

@@ -30,11 +30,24 @@ class EneyjServer {
     		shell_exec( $cmd );
 	}
 
+// call() returns a php string or associative array (decoded from JSON)
 	public static function call($call, $lang) {
 		$host = EneyjServer::HOST;
 		$port = EneyjServer::PORT;
 		$url = "http://$host:$port/?lang=$lang";
 		$url .= '&call=' . urlencode($call);
+
+		EneyjServer::ensureRunning();
+
+		return json_decode(file_get_contents($url), true);
+	}
+
+// labelize() returns a string (JSON encoded)
+	public static function labelize($zid, $lang) {
+		$host = EneyjServer::HOST;
+		$port = EneyjServer::PORT;
+		$url = "http://$host:$port/?labelize=true&lang=$lang";
+		$url .= '&call=' . urlencode($zid);
 
 		EneyjServer::ensureRunning();
 

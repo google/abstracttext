@@ -10,6 +10,7 @@ const evaluate = i.evaluate
 const expand = i.expand
 const validate = i.validate
 const parse = i.parse
+const labelize = i.labelize
 const delabelize = i.delabelize
 
 // Pulled from cli/settings.js - should be in utils maybe?
@@ -53,17 +54,22 @@ const run = settings => {
     }
     data = validate(data);
     data = evaluate(data);
-    const lincall = {
-      Z1K1: c.FUNCTION_CALL,
-      Z7K1: parse(showWithLabels(labellang)),
-      K1: data
+
+    if ("labelize" in queryObject) {
+      data = labelize(data, labellang);
+    } else {
+      const lincall = {
+        Z1K1: c.FUNCTION_CALL,
+        Z7K1: parse(showWithLabels(labellang)),
+        K1: data
+      }
+      data = evaluate(lincall)
+      if (data.Z1K1 === c.STRING) data = data.Z6K1
     }
-    data = evaluate(lincall)
-    if (data.Z1K1 === c.STRING) data = data.Z6K1
   
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.write(data);
+    res.write(JSON.stringify(data));
     res.end();
   });
 
