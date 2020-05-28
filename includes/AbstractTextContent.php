@@ -24,8 +24,6 @@ use ParserOptions;
 use ParserOutput;
 use FormatJson;
 use MediaWiki\MediaWikiServices;
-use AbstractText\TypesRepo;
-use AbstractText\EneyjServer;
 
 class AbstractTextContent extends JsonContent {
 	private $linked_zobjects = array();

@@ -39,7 +39,11 @@ class EneyjServer {
 
 		EneyjServer::ensureRunning();
 
-		return json_decode(file_get_contents($url), true);
+		$result = json_decode(file_get_contents($url), true);
+		if (is_array($result)) { // probably an error?
+			$result = "ERROR?: " . Helper::toString($result);
+		}
+		return $result;
 	}
 
 // labelize() returns a string (JSON encoded)
