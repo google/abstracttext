@@ -24,12 +24,15 @@ use ParserOptions;
 use ParserOutput;
 use FormatJson;
 use MediaWiki\MediaWikiServices;
+use AbstractText\TypesRepo;
 
 class AbstractTextContent extends JsonContent {
 	private $linked_zobjects = array();
+	private $type_data = array();
+	private $zid;
 
 	function __construct( $text ) {
-			parent::__construct( $text, 'Aquinas' );
+		parent::__construct( $text, 'Aquinas' );
 	}
 
 	public function getParserOutput(
@@ -38,7 +41,7 @@ class AbstractTextContent extends JsonContent {
 			ParserOptions $options = null,
 			$generateHtml = true
 	) {
-    $data = $this->getNativeData();
+		$data = $this->getNativeData();
 
 		global $wgLang;
 		$lang = $wgLang->getCode();
@@ -57,13 +60,14 @@ class AbstractTextContent extends JsonContent {
     // TODO and returns and displays the result
     $data_arg = escapeshellarg($data);
 		$title_name = $title->getText();
+		$this->zid = $title_name;
 
 //    $cmd = "node $script_path --lang:$lang --http $murl 'Z36($title_name)'";
 # Somehow this was not working with the --http setting
     $cmd = "node $script_path --lang:$lang 'Z36($title_name)'";
     $wikitext .= shell_exec( $cmd );
 		$json = json_decode($data, true);
-		$label = $this->getLabel($json, $zlang);
+		$label = Helper::getLabel($json, $zlang);
 		$zid = $json['Z1K2'];
 		$label = is_null($label) ? $zid : $label;
 		$wikitext .= "\n\n== $label ==\n";
@@ -74,8 +78,10 @@ class AbstractTextContent extends JsonContent {
 		$wikitext .= $this->getLinkText( $typeid, $zlang );
 		$wikitext .= "\n\n";
 
+		$this->type_data['type'] = $typeid;
+
 		$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
-		$description = $this->getDescription($json, $zlang);
+		$description = Helper::getDescription($json, $zlang);
 		if (!is_null($description)) {
 		  $wikitext .= "$descriptionlabel: $description\n\n";
 	  }
@@ -104,7 +110,7 @@ class AbstractTextContent extends JsonContent {
       $n = 0;
       foreach ($json['Z8K1'] as $arg) {
         $n += 1;
-        $display .= $this->getLabel($arg, $zlang) . ": <input type=\"text\" name=\"arg$n\"> <br>\n";
+        $display .= Helper::getLabel($arg, $zlang) . ": <input type=\"text\" name=\"arg$n\"> <br>\n";
       }
       $display .= " <input type=\"submit\" value=\"Submit\">\n </form>\n";
     }
@@ -126,52 +132,22 @@ class AbstractTextContent extends JsonContent {
 		$parserOutput->setText( $display . $parserOutput->getText() );
 		$parserOutput->addModules( 'ext.abstractText' );
 		$this->addZobjectLinks( $parserOutput );
+
+		$this->updateTypeData($title_name);
+
 		return $parserOutput;
-	}
-
-	public function getMultilingualTextValue($key, $data, $zlang) {
-		if ($data == NULL) return NULL;
-		if (!array_key_exists($key, $data)) return NULL;
-		if (!array_key_exists('Z12K1', $data[$key])) return NULL;
-		foreach ($data[$key]['Z12K1'] as $label)
-		  if ($label['Z11K1'] == $zlang)
-				return $label['Z11K2'];
-		$lang = $data[$key]['Z12K1'][0]['Z11K1'];
-		if ($lang == 'Z251') $lang = 'en';
-		if ($lang == 'Z254') $lang = 'de';
-		return $data[$key]['Z12K1'][0]['Z11K2'] . '<sub>' . $lang . '</sub>';
-	}
-
-	public function getLabel($data, $zlang) {
-		return $this->getMultilingualTextValue('Z1K3', $data, $zlang);
-	}
-
-	public function getDescription($data, $zlang) {
-		return $this->getMultilingualTextValue('Z1K4', $data, $zlang);
-	}
-
-	public function getZObject($zname) {
-		$ztitle = Title::newFromText( $zname, NS_MEANING );
-		if ($ztitle == NULL) return NULL;
-		$zwp = WikiPage::factory( $ztitle );
-		$zrev = $zwp->getRevision();
-		if ($zrev == NULL) return NULL;
-		$zcontent = $zrev->getContent( Revision::RAW );
-		$ztext = ContentHandler::getContentText( $zcontent );
-		$json = json_decode($ztext, true);
-		return $json;
 	}
 
 	public function getKeylabel($keyid, $zlang) {
 		$kpos = strpos($keyid, 'K');
 		$zid = substr($keyid, 0, $kpos);
 		$kid = substr($keyid, $kpos);
-		$zobject = $this->getZObject($zid);
+		$zobject = Helper::getZObject($zid);
 
 		if (!array_key_exists('Z4K2', $zobject)) return $keyid;
 		foreach ($zobject['Z4K2'] as $kobject) {
 			if ($kobject['Z1K2'] == $keyid) {
-				$klabel = $this->getLabel( $kobject, $zlang );
+				$klabel = Helper::getLabel( $kobject, $zlang );
 				return is_null($klabel) ? $keyid : $klabel;
 			}
 		}
@@ -182,13 +158,13 @@ class AbstractTextContent extends JsonContent {
 	public function getDefaultDisplayText($data, $zlang) {
 		$result = "";
 		if (!array_key_exists('Z1K1', $data)) return NULL;
-		$typeobject = $this->getZObject( $data['Z1K1'] );
+		$typeobject = Helper::getZObject( $data['Z1K1'] );
 		if (is_null($typeobject)) return NULL;
     if (!array_key_exists('Z4K2', $typeobject)) return NULL;
 		foreach ($typeobject['Z4K2'] as $kobject) {
 			if (!array_key_exists('Z1K2', $kobject)) continue;
 			$kid = $kobject['Z1K2'];
-			$klabel = $this->getLabel( $kobject, $zlang );
+			$klabel = Helper::getLabel( $kobject, $zlang );
 			$klabel = is_null($klabel) ? $kid : $klabel;
 			if (!array_key_exists($kid, $data)) continue;
 			$result .= "$klabel: ";
@@ -203,14 +179,14 @@ class AbstractTextContent extends JsonContent {
 	public function getTypeDisplayText($data, $zlang) {
 		$result = "";
 		if (!array_key_exists('Z1K1', $data)) return NULL;
-		$typeobject = $this->getZObject( $data['Z1K1'] );
+		$typeobject = Helper::getZObject( $data['Z1K1'] );
 		if (is_null($typeobject)) return NULL;
     if (!array_key_exists('Z4K2', $typeobject)) return NULL;
 		foreach ($typeobject['Z4K2'] as $kobject) {
 			if (!array_key_exists('Z1K2', $kobject)) continue;
 			if ($kobject['Z1K2'] == 'Z4K2') continue;
 			$kid = $kobject['Z1K2'];
-			$klabel = $this->getLabel( $kobject, $zlang );
+			$klabel = Helper::getLabel( $kobject, $zlang );
 			$klabel = is_null($klabel) ? $kid : $klabel;
 			if (!array_key_exists($kid, $data)) continue;
 			$result .= "$klabel: ";
@@ -222,11 +198,11 @@ class AbstractTextContent extends JsonContent {
 		  foreach ($data['Z4K2'] as $kobject) {
   			if (!array_key_exists('Z1K2', $kobject)) continue;
 	  		$kid = $kobject['Z1K2'];
-		  	$klabel = $this->getLabel( $kobject, $zlang );
+		  	$klabel = Helper::getLabel( $kobject, $zlang );
 			  $klabel = is_null($klabel) ? $kid : $klabel;
   			$result .= "==== $klabel ====\n";
 	  		$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
-		  	$description = $this->getDescription($kobject, $zlang);
+		  	$description = Helper::getDescription($kobject, $zlang);
 			  if (!is_null($description)) {
 			    $result .= "$descriptionlabel: $description\n\n";
 		    }
@@ -241,7 +217,7 @@ class AbstractTextContent extends JsonContent {
 	public function getFunctionDisplayText($data, $zlang, $lang, $title_name) {
 		$result = "";
 		if (!array_key_exists('Z1K1', $data)) return NULL;
-		$typeobject = $this->getZObject( $data['Z1K1'] );
+		$typeobject = Helper::getZObject( $data['Z1K1'] );
 		if (is_null($typeobject)) return NULL;
 		if (!array_key_exists('Z4K2', $typeobject)) return NULL;
 
@@ -250,7 +226,9 @@ class AbstractTextContent extends JsonContent {
 			$result .= "return type: ";
 			$result .= $this->getLinkText( $returntypezid, $zlang );
 		  	$result .= "\n\n";
+			$this->type_data['return_type'] = $returntypezid;
 		}
+		$this->type_data['arg_types'] = array();
 
 		$argument_labels = array();
 		$result .= "=== Arguments ===\n";
@@ -258,12 +236,12 @@ class AbstractTextContent extends JsonContent {
 			foreach ($data['Z8K1'] as $kobject) {
 				if (!array_key_exists('Z1K2', $kobject)) continue;
 				$kid = $kobject['Z1K2'];
-				$klabel = $this->getLabel( $kobject, $zlang );
+				$klabel = Helper::getLabel( $kobject, $zlang );
 				$klabel = is_null($klabel) ? $kid : $klabel;
 				$argument_labels[$kid] = $klabel;
 				$result .= "==== $klabel ====\n";
 				$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
-				$description = $this->getDescription($kobject, $zlang);
+				$description = Helper::getDescription($kobject, $zlang);
 				if (!is_null($description)) {
 					$result .= "$descriptionlabel: $description\n\n";
 				}
@@ -274,6 +252,9 @@ class AbstractTextContent extends JsonContent {
 				$result .= "type: ";
 				$result .= $this->getLinkText( $argtypezid, $zlang );
 				$result .= "\n\n";
+
+				$this->type_data['arg_types'][$argtypezid] = 1;
+
 				// $result .= "validators: ''todo''\n\n"; // TODO
 				// TODO: display aliases
 			}
@@ -308,7 +289,7 @@ class AbstractTextContent extends JsonContent {
 				if ($key == 'Z1K1') continue;
 				$valuelabel = $value;
 				if (! is_array($value) ) {
-					$valueobject = $this->getZObject($value);
+					$valueobject = Helper::getZObject($value);
 					if (! is_null($valueobject)) {
 						$valuelabel = $this->getLinkText($value, $zlang);
 					}
@@ -367,7 +348,7 @@ class AbstractTextContent extends JsonContent {
 						if (!array_key_exists('Z1K2', $kobject)) continue;
 						$kid = $kobject['Z1K2'];
 						if ($kid !== $value['Z18K1']) continue;
-						$name = $this->getLabel( $kobject, $zlang );
+						$name = Helper::getLabel( $kobject, $zlang );
 						$name = is_null($name) ? $kid : $name;
 					}
 					$result .= "''$name''";
@@ -390,8 +371,7 @@ class AbstractTextContent extends JsonContent {
 
 	public function getLinkText( $zid, $zlang ) {
 		$this->linked_zobjects[$zid] = 1;
-		$zobj = $this->getZObject( $zid );
-		$label = $this->getLabel( $zobj, $zlang );
+		$label = Helper::zLabel( $zid, $zlang );
 		$label = is_null($label) ? $zid : $label;
 		return "[[M:$zid|$label]]";
 	}
@@ -404,6 +384,19 @@ class AbstractTextContent extends JsonContent {
 			} else {
 				$parserOutput->addLink( $ztitle );
 			}
+		}
+	}
+
+	// Update new database tables for this entry
+	// This is really the wrong place for this, it probably
+	// should be in a "Hook" somewhere. Also it won't handle
+	// deleted entries correctly at all, they'll still be there!
+	public function updateTypeData() {
+		// Compare type data with what was previously stored
+		$repo = new TypesRepo();
+		$old_type_data = $repo->getObjectData( $this->zid );
+		if ( $this->type_data != $old_type_data ) {
+			$repo->updateObjectData($this->zid, $this->type_data);
 		}
 	}
 

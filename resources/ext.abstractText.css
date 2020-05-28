@@ -1,0 +1,9 @@
+.at-typelist {
+    column-count: 5;
+    column-width: 16em;
+}
+
+.at-zlist {
+    column-count: 3;
+    column-width: 24em;
+}
