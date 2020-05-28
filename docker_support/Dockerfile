@@ -27,6 +27,8 @@ RUN cd /var/www/html && \
     php maintenance/install.php --server http://localhost:8081 --dbtype sqlite --dbpath /var/www/data --scriptpath "" --passfile /tmp/admin_passwd "Lambda" "admin"
 RUN cat /tmp/AdditionalLocalSettings.php >> /var/www/html/LocalSettings.php
 
+RUN cd /var/www/html && php maintenance/update.php
+
 RUN cd /var/www/html && \
     php maintenance/importTextFiles.php -s "Import data" --prefix "M:" --overwrite extensions/AbstractText/eneyj/data/Z*
 
