@@ -42,7 +42,8 @@ const processArguments = argv => {
     logs: false,
     debug: false,
     timer: false,
-    url: undefined
+    url: undefined,
+    server: false
   }
 
   let argRest = 2
@@ -106,6 +107,10 @@ const processArguments = argv => {
       argRest++
       settings.url = argv[argRest]
       i.setDataSourceFile(settings.url)
+      unknownArg = false
+    }
+    if (argv[argRest] === '--server') {
+      settings.server = true
       unknownArg = false
     }
     if (unknownArg) {
