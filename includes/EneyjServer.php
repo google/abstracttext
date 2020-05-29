@@ -39,7 +39,9 @@ class EneyjServer {
 
 		EneyjServer::ensureRunning();
 
-		$result = json_decode(file_get_contents($url), true);
+		$url_contents = EneyjServer::fetch_url_with_retry($url);
+
+		$result = json_decode($url_contents, true);
 		if (is_array($result)) { // probably an error?
 			$result = "ERROR?: " . Helper::toString($result);
 		}
@@ -55,6 +57,21 @@ class EneyjServer {
 
 		EneyjServer::ensureRunning();
 
-		return file_get_contents($url);
+		$url_contents = EneyjServer::fetch_url_with_retry($url);
+		return $url_contents;
+	}
+
+	private static function fetch_url_with_retry($url) {
+		$retries = 12;
+		$retry_delay = 2; // seconds to wait before retrying
+		while ($retries > 0) {
+			$response = @file_get_contents($url);
+			if ($response != false) {
+				return($response);
+			}
+			sleep($retry_delay);
+			$retries -= 1;
+		}
+		return null;
 	}
 }
