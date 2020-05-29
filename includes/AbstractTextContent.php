@@ -217,9 +217,6 @@ class AbstractTextContent extends JsonContent {
 	public function getFunctionDisplayText($data, $zlang, $lang, $title_name) {
 		$result = "";
 		if (!array_key_exists('Z1K1', $data)) return NULL;
-		$typeobject = Helper::getZObject( $data['Z1K1'] );
-		if (is_null($typeobject)) return NULL;
-		if (!array_key_exists('Z4K2', $typeobject)) return NULL;
 
 		if (array_key_exists('Z8K2', $data)) {
 	  		$returntypezid = $data['Z8K2'];
