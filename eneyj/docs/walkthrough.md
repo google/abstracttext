@@ -118,6 +118,7 @@ Let's switch back to English.
 
 The type field of `Z385` in the first screenshot above linked to "positive integer".
 Positive integer is not a primitive type in AbstractText, but is defined in AbstractText itself, in fact as the Z-Object with the ZID `Z70`.
+In fact, there are no primitive types - all types are Z-Objects.
 
 ![Positive integer type](z70top.png)
 
