@@ -16,8 +16,12 @@
 
 const settings = require('./cli/settings.js').settings(process.argv)
 
-if (settings.interactive) {
-  require('./cli/interactive.js').interactive(settings)
+if (settings.server) {
+  require('./server/start.js').run(settings)
 } else {
-  require('./cli/answer.js').answer(settings.call, settings)
+  if (settings.interactive) {
+    require('./cli/interactive.js').interactive(settings)
+  } else {
+    require('./cli/answer.js').answer(settings.call, settings)
+  }
 }
