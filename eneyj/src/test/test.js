@@ -539,7 +539,7 @@ assertText(
 )
 
 assertText('argument_reference', 'type(argument_reference, [reference], write)')
-assertText('boolean', 'type(boolean, [identity], name, [true, false])')
+assertText('boolean', 'type(boolean, [identity], show_boolean, [true, false])')
 
 assertText('if',
   'function([condition, consequent, alternative], zobject, [Z31C1, Z31C2])')
@@ -576,7 +576,7 @@ assertText('negate(true)', F)
 assertText('negate(false)', T)
 
 assertText('kleenean',
-  'type(kleenean, [identity], name, [kleenean_false_or_maybe], ' +
+  'type(kleenean, [identity], show_kleenean, [kleenean_false_or_maybe], ' +
   '[kleenean_true, kleenean_true_or_maybe, kleenean_false])'
 )
 assertText('maybe', 'kleenean(maybe)')
