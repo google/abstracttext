@@ -45,9 +45,8 @@ class Helper {
 		$ztitle = Title::newFromText( $zname, NS_MEANING );
 		if ($ztitle == NULL) return NULL;
 		$zwp = WikiPage::factory( $ztitle );
-		$zrev = $zwp->getRevision();
-		if ($zrev == NULL) return NULL;
-		$zcontent = $zrev->getContent( Revision::RAW );
+		$zcontent = $zwp->getContent( Revision::RAW );
+		if ($zcontent == NULL) return NULL;
 		$ztext = ContentHandler::getContentText( $zcontent );
 		$json = json_decode($ztext, true);
 		return $json;
@@ -59,6 +58,28 @@ class Helper {
 
 	public static function getDescription($data, $zlang) {
 		return Helper::getMultilingualTextValue('Z1K4', $data, $zlang);
+	}
+
+	public static function getKeylabel($keyid, $zlang) {
+		$kpos = strpos($keyid, 'K');
+		if ($kpos === FALSE) {
+			return $keyid;
+		}
+		$zid = substr($keyid, 0, $kpos);
+		$kid = substr($keyid, $kpos);
+		$zobject = Helper::getZObject($zid);
+		if ($zobject == NULL) {
+			return $keyid;
+		}
+
+		if (!array_key_exists('Z4K2', $zobject)) return $keyid;
+		foreach ($zobject['Z4K2'] as $kobject) {
+			if ($kobject['Z1K2'] == $keyid) {
+				$klabel = Helper::getLabel( $kobject, $zlang );
+				return is_null($klabel) ? $keyid : $klabel;
+			}
+		}
+		return $keyid;
 	}
 
 	public static function getMultilingualTextValue($key, $data, $zlang) {

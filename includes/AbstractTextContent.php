@@ -60,7 +60,7 @@ class AbstractTextContent extends JsonContent {
 		$label = is_null($label) ? $zid : $label;
 		$wikitext .= "\n\n== $label ==\n";
 
-		$typekeylabel = $this->getKeylabel( 'Z1K1', $zlang );
+		$typekeylabel = Helper::getKeylabel( 'Z1K1', $zlang );
 		$typeid = $json['Z1K1'];
 		$wikitext .= "$typekeylabel: ";
 		$wikitext .= $this->getLinkText( $typeid, $zlang );
@@ -68,7 +68,7 @@ class AbstractTextContent extends JsonContent {
 
 		$this->type_data['type'] = $typeid;
 
-		$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
+		$descriptionlabel = Helper::getKeyLabel( 'Z1K4', $zlang );
 		$description = Helper::getDescription($json, $zlang);
 		if (!is_null($description)) {
 		  $wikitext .= "$descriptionlabel: $description\n\n";
@@ -122,23 +122,6 @@ class AbstractTextContent extends JsonContent {
 		return $parserOutput;
 	}
 
-	public function getKeylabel($keyid, $zlang) {
-		$kpos = strpos($keyid, 'K');
-		$zid = substr($keyid, 0, $kpos);
-		$kid = substr($keyid, $kpos);
-		$zobject = Helper::getZObject($zid);
-
-		if (!array_key_exists('Z4K2', $zobject)) return $keyid;
-		foreach ($zobject['Z4K2'] as $kobject) {
-			if ($kobject['Z1K2'] == $keyid) {
-				$klabel = Helper::getLabel( $kobject, $zlang );
-				return is_null($klabel) ? $keyid : $klabel;
-			}
-		}
-		return 'tttype';
-		return $keyid;
-	}
-
 	public function getDefaultDisplayText($data, $zlang) {
 		$result = "";
 		if (!array_key_exists('Z1K1', $data)) return NULL;
@@ -185,7 +168,7 @@ class AbstractTextContent extends JsonContent {
 		  	$klabel = Helper::getLabel( $kobject, $zlang );
 			  $klabel = is_null($klabel) ? $kid : $klabel;
   			$result .= "==== $klabel ====\n";
-	  		$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
+	  		$descriptionlabel = Helper::getKeyLabel( 'Z1K4', $zlang );
 		  	$description = Helper::getDescription($kobject, $zlang);
 			  if (!is_null($description)) {
 			    $result .= "$descriptionlabel: $description\n\n";
@@ -221,7 +204,7 @@ class AbstractTextContent extends JsonContent {
 				$klabel = is_null($klabel) ? $kid : $klabel;
 				$argument_labels[$kid] = $klabel;
 				$result .= "==== $klabel ====\n";
-				$descriptionlabel = $this->getKeyLabel( 'Z1K4', $zlang );
+				$descriptionlabel = Helper::getKeyLabel( 'Z1K4', $zlang );
 				$description = Helper::getDescription($kobject, $zlang);
 				if (!is_null($description)) {
 					$result .= "$descriptionlabel: $description\n\n";
