@@ -1,9 +1,9 @@
 <template>
   <tr>
     <td> {{langlabel}} ({{ lang_zid }})</td>
-    <td> <input v-model="label" /></td>
-    <td> <input v-model="desc" /></td>
-    <td> <input v-model="aliases" /></td>
+    <td> <input v-model="label" ></input></td>
+    <td> <input v-model="desc" ></input></td>
+    <td> <input v-model="aliases" ></input></td>
   </tr>
 </template>
 

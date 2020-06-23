@@ -1,8 +1,8 @@
 <template>
   <div class="full_zobject_box">
-    <zobject-keys :zobject="zobject" v-on:input="update_zobject"/>
-    <label-desc-aliases :zobject="zobject" v-on:input="update_zobject"/>
-    <other-keys :zobject="zobject" v-on:input="update_zobject"/>
+    <zobject-keys :zobject="zobject" v-on:input="update_zobject"></zobject-keys>
+    <label-desc-aliases :zobject="zobject" v-on:input="update_zobject"></label-desc-aliases>
+    <other-keys :zobject="zobject" v-on:input="update_zobject"></other-keys>
   </div>
 </template>
 

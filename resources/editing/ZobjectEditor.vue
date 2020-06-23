@@ -1,9 +1,9 @@
 <template>
   <div id="zobject-editor">
-    <full-zobject :zobject="zobject" v-on:input="updateZobject"/>
+    <full-zobject :zobject="zobject" v-on:input="updateZobject"></full-zobject>
     <div>
       <label for="summary">Summary:</label>
-      <input class="zedit_summary" name="summary" v-model="summary" />
+      <input class="zedit_summary" name="summary" v-model="summary" ></input>
     </div>
     <button v-on:click="submit">Save changes</button>
     <p>Current ZObject: {{ zobject }} </p>

@@ -1,4 +1,5 @@
 <template>
+  <div>
   <table class="zobject_label_box">
     <tbody v-if="used_lang_list.length > 0">
     <tr>
@@ -7,7 +8,7 @@
       <th>{{ z1k4label }} (Z1K4)</th>
       <th>{{ z1k5label }} (Z1K5)</th>
     </tr>
-    <single-lang-row v-for="lang_zid in used_lang_list" :zobject="zobject" :lang_zid="lang_zid" :key="lang_zid" v-on:input="update_zobject" />
+    <single-lang-row v-for="lang_zid in used_lang_list" :zobject="zobject" :lang_zid="lang_zid" :key="lang_zid" v-on:input="update_zobject" ></single-lang-row>
     <tr>
       <td> 
         <select v-bind:value="newlang" v-on:change="addNewLang">
@@ -30,6 +31,7 @@
         </select></td></tr>
     </tbody>
   </table>
+  </div>
 </template>
 
 <script>
