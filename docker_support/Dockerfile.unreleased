@@ -78,19 +78,17 @@ RUN set -eux; \
 	mkdir -p /var/www/data; \
 	chown -R www-data:www-data /var/www/data
 
-# MediaWiki setup
+# MediaWiki setup - specify 1.35.0-wmf.38 version
 RUN set -eux; \
-	git clone https://gerrit.wikimedia.org/r/mediawiki/core.git /var/www/html && \
-	git clone https://gerrit.wikimedia.org/r/mediawiki/vendor.git /var/www/html/vendor
-
-RUN git clone https://gerrit.wikimedia.org/r/mediawiki/skins/Vector /var/www/html/skins/Vector
+	git clone https://gerrit.wikimedia.org/r/mediawiki/core.git --branch wmf/1.35.0-wmf.38  /var/www/html && \
+	cd /var/www/html && \
+	git submodule update --init
 
 RUN apt-get update; \
 	apt-get install -q -y curl nodejs npm
 RUN npm install npm@latest -g
 
 RUN cd /var/www/html/extensions && \
-    git clone https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector.git && \
     git clone https://github.com/google/abstracttext.git AbstractText
 
 RUN cd /var/www/html/extensions/AbstractText/eneyj && \
