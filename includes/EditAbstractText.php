@@ -22,11 +22,6 @@ class EditAbstractText extends Action {
 		$title = $this->page->getTitle();
 		$page_zid = $title->getText();
 
-		if (false) { // form submitted - do something with request
-			$request_data = $this->getRequest()->getValues();
-			print_r($request_data);
-		}
-
 		$output->addHtml("<h2> Edit $page_zid </h2>");
 
 		$zobject = Helper::getZObject($page_zid);
@@ -45,7 +40,9 @@ class EditAbstractText extends Action {
 		$key_labels['Z1K5'] = Helper::getKeylabel( 'Z1K5', $zlang );
 		$key_labels['Z1K6'] = Helper::getKeylabel( 'Z1K6', $zlang );
 
-		$this->collect_key_labels($zobject, $key_labels, $zlang);
+		if ($zobject != NULL) {
+			$this->collect_key_labels($zobject, $key_labels, $zlang);
+		}
 
 		$output->addJsConfigVars( ['zobject' => $zobject,
 			'zlang' => $zlang,

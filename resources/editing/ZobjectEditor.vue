@@ -16,8 +16,13 @@ var FullZobject = require('./FullZobject.vue');
 module.exports = {
   name: 'ZobjectEditor',
   data: function() {
+    zobject = mw.config.get('zobject');
+    if (zobject === null) {
+      const zid = mw.config.get('wgTitle');
+      zobject = {'Z1K2': zid};
+    }
     return {
-     zobject: mw.config.get('zobject'),
+     zobject: zobject,
      summary: ''
     };
   },
@@ -29,18 +34,25 @@ module.exports = {
       this.zobject = new_zobject;
     },
     submit: function() {
-      const zid = this.zobject.Z1K2;
-      const page = 'M:' + zid;
+      const page = mw.config.get('wgPageName');
       let api = new mw.Api();
       let self = this;
-      api.edit(page, function ( revision ) {
-        return {
-          text: JSON.stringify(self.zobject),
-          summary: self.summary
-        };
-      }).then( function() {
-        window.location.href = "/index.php/" + page;
-      });
+      if (mw.config.get('zobject') === null) {
+        api.create(page, { summary: self.summary },
+           JSON.stringify(self.zobject)
+        ).then( function() {
+          window.location.href = "/index.php/" + page;
+        });
+      } else {
+        api.edit(page, function ( revision ) {
+          return {
+            text: JSON.stringify(self.zobject),
+            summary: self.summary
+          };
+        }).then( function() {
+          window.location.href = "/index.php/" + page;
+        });
+      }
     }
   }
 };
