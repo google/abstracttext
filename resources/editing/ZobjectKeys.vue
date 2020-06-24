@@ -6,6 +6,9 @@
          {{ ztype.label }} ({{ ztype.value }})
        </option>
     </select>
+    <span> {{ z1k2label}} (Z1K2): </span>
+    <input v-if="editableid" v-model="zobject_id"></input>
+    <span v-else> {{ zobject_id }} </span>
   </div>
 </template>
 
@@ -21,9 +24,18 @@ module.exports = {
         this.zobject.Z1K1 = newValue;
         this.$emit('input', this.zobject);
       }
+    },
+    zobject_id: {
+      get: function() {
+        return this.zobject.Z1K2;
+      },
+      set: function(newValue) {
+        this.zobject.Z1K2 = newValue;
+        this.$emit('input', this.zobject);
+      }
     }
   },
-  props: ['zobject'],
+  props: ['zobject', 'editableid'],
   data: function() {
     var zkeylabels = mw.config.get('zkeylabels');
     var typeoptions = Object.entries(mw.config.get('ztypes')).map( ([k, v]) => {
@@ -34,6 +46,7 @@ module.exports = {
     });
     return {
         z1k1label: zkeylabels.Z1K1,
+        z1k2label: zkeylabels.Z1K2,
         ztypes: typeoptions
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="full_zobject_box">
-    <zobject-keys :zobject="zobject" v-on:input="update_zobject"></zobject-keys>
+    <zobject-keys :zobject="zobject" :editableid="editableid" v-on:input="update_zobject"></zobject-keys>
     <label-desc-aliases :zobject="zobject" v-on:input="update_zobject"></label-desc-aliases>
     <other-keys :zobject="zobject" v-on:input="update_zobject"></other-keys>
   </div>
@@ -16,7 +16,7 @@ module.exports = {
   beforeCreate: function() { // Need to delay require of OtherKeys to avoid loop
     this.$options.components['other-keys'] = require('./OtherKeys.vue');
   },
-  props: ['zobject'],
+  props: ['zobject', 'editableid'],
   data: function() {
     return {};
   },

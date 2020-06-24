@@ -11,7 +11,7 @@
         <option value="list">List</option>
       </select>
       <input v-else-if="listTypes[index] === 'string'" :value="item" v-on:input="update_string_value($event, index)" ></input>
-      <full-zobject v-else-if="listTypes[index] === 'zobject'" :zobject="item" v-on:input="update_value($event, index)" ></full-zobject>
+      <full-zobject v-else-if="listTypes[index] === 'zobject'" :zobject="item" :editableid="true" v-on:input="update_value($event, index)" ></full-zobject>
       <list-value v-else :list="item" v-on:input="update_value($event, index)" ></list-value>
      </li>
      <li><button v-on:click="addNewItem" >+</button> </li>

@@ -1,6 +1,6 @@
 <template>
   <div id="zobject-editor">
-    <full-zobject :zobject="zobject" v-on:input="updateZobject"></full-zobject>
+    <full-zobject :zobject="zobject" :editableid="false" v-on:input="updateZobject"></full-zobject>
     <div>
       <label for="summary">Summary:</label>
       <input class="zedit_summary" name="summary" v-model="summary" ></input>

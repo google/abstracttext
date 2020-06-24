@@ -4,7 +4,7 @@
       <button v-on:click="removeEntry(key)" >-</button>
       <span>{{ zkeylabels[key] }} ({{ key }}):</span>
       <input v-if="keyTypes[key] === 'string'" :value="value" v-on:input="update_string_key($event, key)" ></input>
-      <full-zobject v-else-if="keyTypes[key] === 'zobject'" :zobject="zobject[key]" v-on:input="update_key($event, key)" ></full-zobject>
+      <full-zobject v-else-if="keyTypes[key] === 'zobject'" :zobject="zobject[key]" :editableid="true" v-on:input="update_key($event, key)" ></full-zobject>
       <list-value v-else-if="keyTypes[key] === 'list'" :list="zobject[key]" v-on:input="update_key($event, key)" ></list-value>
       <select v-else v-on:change="setKeyType($event, key)">
         <option selected disabled value="None">Value Type</option>
