@@ -78,8 +78,7 @@
     "ext.abstractText": {
       "packageFiles": [
           "extensions/AbstractText/resources/ext.abstractText/index.js",
-          "extensions/AbstractText/resources/ext.abstractText/testing.js",
-          "extensions/AbstractText/resources/ext.abstractText/editzobject.js"
+          "extensions/AbstractText/resources/ext.abstractText/testing.js"
       ],
       "styles": "extensions/AbstractText/resources/ext.abstractText.css"
     },
