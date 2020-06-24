@@ -86,8 +86,8 @@ class AbstractTextContent extends JsonContent {
 			}
 		}
 
-		global $wgParser;
-		$display = $wgParser->parse($wikitext, $title, $options, true, true, $revId )->getText();
+		$parser = MediaWikiServices::getInstance()->getParser();
+		$display = $parser->parse($wikitext, $title, $options, true, true, $revId )->getText();
 
     if ($json['Z1K1'] === 'Z8') {
 			global $wgScriptPath;
