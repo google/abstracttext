@@ -73,7 +73,7 @@ vagrant up
 vagrant ssh
 ```
 
-To load the data that is alreday available:
+To load the data that is already available:
 
 ```
 php mediawiki/maintenance/importTextFiles.php -s "Import data" --prefix "M:" --overwrite abstracttext/eneyj/data/Z*
