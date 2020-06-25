@@ -1,10 +1,10 @@
 <template>
-  <tr>
-    <td> {{langlabel}} ({{ lang_zid }})</td>
-    <td> <input v-model="label" ></input></td>
-    <td> <input v-model="desc" ></input></td>
-    <td> <input v-model="aliases" ></input></td>
-  </tr>
+  <div class="zlabel_row">
+    <div class="zlabel_cell"> {{langlabel}} ({{ lang_zid }})</div>
+    <div class="zlabel_cell"> <input v-model="label" class="zlabel_input"></input></div>
+    <div class="zdesc_cell"> <input v-model="desc" class="zlabel_input"></input></div>
+    <div class="zalias_cell"> <input v-model="aliases" class="zlabel_input"></input></div>
+  </div>
 </template>
 
 <script>
@@ -119,3 +119,10 @@ module.exports = {
   },
 }
 </script>
+
+<style lang="less">
+.zlabel_input {
+  width: 100%;
+  box-sizing: border-box;
+}
+</style>

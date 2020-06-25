@@ -1,36 +1,33 @@
 <template>
-  <div>
-  <table class="zobject_label_box">
-    <tbody v-if="used_lang_list.length > 0">
-    <tr>
-      <th>{{ languagetypelabel }}</th>
-      <th>{{ z1k3label }} (Z1K3)</th>
-      <th>{{ z1k4label }} (Z1K4)</th>
-      <th>{{ z1k5label }} (Z1K5)</th>
-    </tr>
+  <div class="zobject_label_box">
+    <div v-if="used_lang_list.length > 0">
+    <div class="zlabel_row">
+      <div class="zlabel_cell"><strong>{{ languagetypelabel }}</strong></div>
+      <div class="zlabel_cell"><strong>{{ z1k3label }} (Z1K3)</strong></div>
+      <div class="zdesc_cell"><strong>{{ z1k4label }} (Z1K4)</strong></div>
+      <div class="zalias_cell"><strong>{{ z1k5label }} (Z1K5)</strong></div>
+    </div>
     <single-lang-row v-for="lang_zid in used_lang_list" :zobject="zobject" :lang_zid="lang_zid" :key="lang_zid" v-on:input="update_zobject" ></single-lang-row>
-    <tr>
-      <td> 
+    <div class="zlabel_row">
+      <div class="zlabel_cell"> 
         <select v-bind:value="newlang" v-on:change="addNewLang">
           <option selected disabled value="None">+ {{ languagetypelabel }}</option>
           <option v-for="lang in unused_lang_list" v-bind:value="lang.zid">
             {{ lang.label }} ({{ lang.zid }})
           </option>
         </select>
-      </td>
-      <td colspan="3"></td>
-    </tr>
-    </tbody>
-    <tbody v-else>
-      <tr><td>unlabeled</td> 
-        <td><select v-bind:value="newlang" v-on:change="addNewLang">
+      </div>
+    </div>
+    </div>
+    <div v-else>
+      <div class="zlabel_row"><div class="zlabel_cell">unlabeled</div> 
+        <div class="zlabel_cell"><select v-bind:value="newlang" v-on:change="addNewLang">
           <option selected disabled value="None">+ {{ languagetypelabel }}</option>
           <option v-for="lang in unused_lang_list" v-bind:value="lang.zid">
             {{ lang.label }} ({{ lang.zid }})
           </option>
-        </select></td></tr>
-    </tbody>
-  </table>
+        </select></div></div>
+    </div>
   </div>
 </template>
 
@@ -96,6 +93,34 @@ module.exports = {
 
 <style lang="less">
 .zobject_label_box {
+  display: block;
+  width: 100%;
   outline: 1px solid #808080;
+}
+.zlabel_row {
+  clear: both;
+}
+.zlabel_cell {
+  float: left;
+  padding: 0%;
+  width: 15%;
+}
+.zdesc_cell {
+  float: left;
+  padding: 0%;
+  width: 45%;
+}
+.zalias_cell {
+  float: left;
+  padding: 0%;
+  width: 25%;
+}
+.zobject_label_box:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 </style>
