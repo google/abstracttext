@@ -71,5 +71,5 @@ That is called internalization.
 
 In the standard setting, the function library lives and is maintained inside
 a wiki. The kernel should make only minimal assumptions about the function
-library. These assumptions should written down explicitly.
+library. These assumptions should be written down explicitly.
 
