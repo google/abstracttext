@@ -11,6 +11,9 @@
   "APIModules": {
     "abstracttext": "AbstractTextAPI"
   },
+  "Actions": {
+    "newedit": "AbstractText\\EditAbstractText"
+  },
   "AutoloadNamespaces": {
     "AbstractText\\": "includes/"
   },
@@ -68,14 +71,32 @@
     "CodeEditorGetPageLanguage": [
       "AbstractText\\AbstractTextHooks::onCodeEditorGetPageLanguage"
     ],
-    "LoadExtensionSchemaUpdates": "AbstractText\\AbstractTextHooks::onLoadExtensionSchemaUpdates"
+    "LoadExtensionSchemaUpdates": "AbstractText\\AbstractTextHooks::onLoadExtensionSchemaUpdates",
+    "SkinTemplateNavigation": "AbstractText\\AbstractTextHooks::addEditTab"
   },
   "ResourceModules": {
     "ext.abstractText": {
       "packageFiles": [
-          "extensions/AbstractText/resources/ext.abstractText/index.js"
+          "extensions/AbstractText/resources/ext.abstractText/index.js",
+          "extensions/AbstractText/resources/ext.abstractText/testing.js"
       ],
       "styles": "extensions/AbstractText/resources/ext.abstractText.css"
+    },
+    "ext.abstractText.editor": {
+      "dependencies": [
+        "vue",
+        "mediawiki.api"
+      ],
+      "packageFiles": [
+        "extensions/AbstractText/resources/editing/index.js",
+        "extensions/AbstractText/resources/editing/ZobjectEditor.vue",
+        "extensions/AbstractText/resources/editing/FullZobject.vue",
+        "extensions/AbstractText/resources/editing/ZobjectKeys.vue",
+        "extensions/AbstractText/resources/editing/LabelDescAliases.vue",
+        "extensions/AbstractText/resources/editing/SingleLangRow.vue",
+        "extensions/AbstractText/resources/editing/OtherKeys.vue",
+        "extensions/AbstractText/resources/editing/ListValue.vue"
+      ]
     }
   },
   "manifest_version": 2

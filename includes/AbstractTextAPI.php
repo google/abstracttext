@@ -14,6 +14,7 @@
 // limitations under the License.
 
 use MediaWiki\MediaWikiServices;
+use AbstractText\Helper;
 
 /**
  * Class AbstractTextApi
@@ -37,6 +38,12 @@ class AbstractTextAPI extends ApiBase {
 		if ( array_key_exists('runATest', $params) ) {
 			if ($params['runATest']) {
 				$this->runTest($params['function'], $params['testId'], $params['implementationId']);
+				return;
+			}
+		}
+		if ( array_key_exists('getKeyLabel', $params) ) {
+			if ($params['getKeyLabel']) {
+				$this->getKeyLabel($params['keyid'], $params['zlang']);
 				return;
 			}
 		}
@@ -85,7 +92,7 @@ class AbstractTextAPI extends ApiBase {
 	protected function getAllowedParams() {
 		return [
 			'function' => [
-				ApiBase::PARAM_REQUIRED => true,
+				ApiBase::PARAM_REQUIRED => false,
 			],
 			'arg1' => [
 				ApiBase::PARAM_REQUIRED => false,
@@ -117,6 +124,15 @@ class AbstractTextAPI extends ApiBase {
 			'implementationId' => [
 				ApiBase::PARAM_REQUIRED => false,
 			],
+			'getKeyLabel' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
+			'keyid' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
+			'zlang' => [
+				ApiBase::PARAM_REQUIRED => false,
+			],
 		];
 	}
 
@@ -144,5 +160,10 @@ class AbstractTextAPI extends ApiBase {
 		$result = shell_exec( $cmd );
 		$results_array = json_decode($result, TRUE);
 		$this->getResult()->addValue( null, 'testResults', $results_array);
+	}
+
+	protected function getKeyLabel($keyid, $zlang) {
+		$keylabel = Helper::getKeylabel( $keyid, $zlang );
+		$this->getResult()->addValue( null, $keyid, $keylabel );
 	}
 }

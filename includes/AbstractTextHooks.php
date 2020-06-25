@@ -35,4 +35,15 @@ class AbstractTextHooks {
 		);
 	}
 
+	public static function addEditTab( $skinTemplate, &$links ) {
+		$title = $skinTemplate->getTitle();
+		$action = $skinTemplate->getRequest()->getVal( 'action' );
+		$links['views']['newedit'] = array(
+			'class' => ( $action == 'newedit') ? 'selected' : false,
+			'text' => "New edit",
+			'href' => $title->getLocalURL('action=newedit')
+		);
+
+		return true;
+	}
 }
