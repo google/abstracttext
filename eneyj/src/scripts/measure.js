@@ -150,7 +150,6 @@ for (let f of functions) {
       }
       if (printErrors && result.errors === 1) {
         console.log(f, test.Z1K2, implementation.Z1K2)
-        console.log(write(call))
         console.log('Actual  : ' + result.result)
         console.log('Expected: ' + result.expected)
         console.log()
